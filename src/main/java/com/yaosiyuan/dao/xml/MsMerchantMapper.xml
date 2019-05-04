@@ -124,7 +124,7 @@
     <include refid="Base_Column_List" />
     from ms_merchant
     <where>
-			<include refid="consutomsql"></include>
-		</where>
+		<include refid="consutomsql"></include>
+	</where>
   </select>
 </mapper>

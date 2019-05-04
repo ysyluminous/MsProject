@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.yaosiyuan.dao.MsUserMapper;
 import com.yaosiyuan.entity.MsUser;
+import com.yaosiyuan.vo.MsUserVo;
 
 /**
  * @description: 功能描述 ()
@@ -56,8 +57,8 @@ public class MsUserService {
 		return msUserMapper.updateByPrimaryKey(record);
 	}
 
-	public List<MsUser> queryMsUserByVo(MsUser msUser) {
-		return msUserMapper.queryMsUserByVo(msUser);
+	public List<MsUser> queryMsUserByVo(MsUserVo msUserVo) {
+		return msUserMapper.queryMsUserByVo(msUserVo);
 
 	}
 }

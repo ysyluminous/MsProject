@@ -3,6 +3,7 @@ package com.yaosiyuan.dao;
 import java.util.List;
 
 import com.yaosiyuan.entity.MsUser;
+import com.yaosiyuan.vo.MsUserVo;
 
 public interface MsUserMapper {
 	int deleteByPrimaryKey(Integer id);
@@ -17,5 +18,5 @@ public interface MsUserMapper {
 
 	int updateByPrimaryKey(MsUser record);
 
-	List<MsUser> queryMsUserByVo(MsUser msUser);
+	List<MsUser> queryMsUserByVo(MsUserVo msUserVo);
 }
