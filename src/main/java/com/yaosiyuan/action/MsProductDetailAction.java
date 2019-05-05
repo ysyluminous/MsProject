@@ -61,7 +61,7 @@ public class MsProductDetailAction {
 		return "msProductDetail/msproductdetailview";
 	}
 
-	@RequestMapping(value = "toupdateMsproductdetail")
+	@RequestMapping(value = "toUpdateMsProductDetail")
 	public String toupdateMsproductdetail(HttpServletRequest req, int productId) {
 		MsProductDetail msProductDetail = msProductDetailService.selectByPrimaryKey(productId);
 		req.setAttribute("msProductDetail", msProductDetail);
