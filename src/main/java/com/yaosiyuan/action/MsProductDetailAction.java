@@ -54,7 +54,7 @@ public class MsProductDetailAction {
 		return "redirect:/msProductAction/listMsProduct";
 	}
 
-	@RequestMapping(value = "queryMsproductdetailByid")
+	@RequestMapping(value = "queryMsProductdetailByid")
 	public String queryMsproductdetailByid(HttpServletRequest req, int productId) {
 		MsProductDetail msProductDetail = msProductDetailService.selectByPrimaryKey(productId);
 		req.setAttribute("msProductDetail", msProductDetail);

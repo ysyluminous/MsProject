@@ -13,12 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/dist/js/adminlte.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/dist/css/AdminLTE.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/bower_components/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/bower_components/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/bower_components/Ionicons/css/ionicons.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/dist/css/skins/skin-blue.min.css">
+ <%@include file="../include/css.jsp"%>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -100,7 +95,7 @@
 							<a href="queryMsProductByid?id=${item.id}">查看</a>||
 							<a href="toupdatemsproductstate?id=${item.id}">审核</a>||
 							<a href="${pageContext.request.contextPath }/msProducthetailAction/toInsertMsProducthetail?productId=${item.productId}&&merchant=${item.merchant}">添加商品详情</a>||
-							<a href="${pageContext.request.contextPath }/msProducthetailAction/queryMsproducthetailByid?productId=${item.productId}">查看商品详情</a>||
+							<a href="${pageContext.request.contextPath }/msProducthetailAction/queryMsProducthetailByid?productId=${item.productId}">查看商品详情</a>||
 							<a href="${pageContext.request.contextPath }/msProducthetailAction/toupdateMsproducthetail?productId=${item.productId}">修改商品详情</a></th>
 						</th>
 						

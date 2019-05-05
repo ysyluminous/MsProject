@@ -1,26 +1,59 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>秒杀首页</title>
+
+
+ <%@include file="../include/css.jsp"%>
+
 </head>
-<body>
-<form action="add">
-	秒杀商品的id: ${msProductInfo.productId }</br>
-		秒杀商品的标题: ${msProductInfo.productTitle }</br>
-		秒杀商品的图片地址: ${msProductInfo.productPic }</br>
-		秒杀商品价格: ${msProductInfo.miaoshaPrice }</br>
-		商家的id: ${msProductInfo.merchant }</br>
-		商品原价: ${msProductInfo.productOgPrice }</br>
-		秒杀商品的申请时间: ${msProductInfo.applayDate }</br>
-		秒杀商品的审核时间: ${msProductInfo.aidotStatus }</br>
-		秒杀的开始时间: ${msProductInfo.startTime }</br>
-		秒杀的结束时间: ${msProductInfo.endTime }</br>
-		秒杀数量: ${msProductInfo.productCount }</br>
-		秒杀的库存: ${msProductInfo.stockCount }</br>
-		秒杀的描述: ${msProductInfo.description }</br>
-</form>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <%@include file="../include/navhead.jsp"%>
+  <!-- Left side column. contains the logo and sidebar -->
+  <%@include file="../include/sider.jsp"%>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Page Header
+        <small>Optional description</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+        
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+        
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+ <%@include file="../include/footer.jsp"%>
+
+  <!-- Control Sidebar -->
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+  immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
 </body>
 </html>
