@@ -16,12 +16,12 @@
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="product_count" jdbcType="INTEGER" property="productCount" />
     <result column="stock_count" jdbcType="INTEGER" property="stockCount" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <sql id="Base_Column_List">
     id, product_id, product_title, product_pic, product_og_price, miaosha_price, merchant, 
     applay_date, aidot_date, aidot_status, start_time, end_time, product_count, stock_count, 
-    desc
+    description
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,18 +33,32 @@
     delete from ms_product_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <insert id="applyMsProduct" parameterType="com.yaosiyuan.entity.MsProductInfo">
+	
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into ms_product_info(product_id,product_title,
+		product_pic,miaosha_price,product_og_price,merchant,
+		applay_date,aidot_status,start_time,end_time,product_count,
+		stock_count,description) 
+		value(#{productId},#{productTitle},#{productPic},
+		#{miaoshaPrice},#{productOgPrice},#{merchant},
+		#{applayDate},#{aidotStatus},#{startTime},#{endTime},
+		#{productCount},#{stockCount},#{description})
+	</insert>
   <insert id="insert" parameterType="com.yaosiyuan.entity.MsProductInfo">
     insert into ms_product_info (id, product_id, product_title, 
       product_pic, product_og_price, miaosha_price, 
       merchant, applay_date, aidot_date, 
       aidot_status, start_time, end_time, 
-      product_count, stock_count, desc
+      product_count, stock_count, description
       )
     values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR}, 
       #{productPic,jdbcType=VARCHAR}, #{productOgPrice,jdbcType=INTEGER}, #{miaoshaPrice,jdbcType=INTEGER}, 
       #{merchant,jdbcType=INTEGER}, #{applayDate,jdbcType=TIMESTAMP}, #{aidotDate,jdbcType=TIMESTAMP}, 
       #{aidotStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{productCount,jdbcType=INTEGER}, #{stockCount,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}
+      #{productCount,jdbcType=INTEGER}, #{stockCount,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yaosiyuan.entity.MsProductInfo">
@@ -92,8 +106,8 @@
       <if test="stockCount != null">
         stock_count,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="description != null">
+        description,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -139,8 +153,8 @@
       <if test="stockCount != null">
         #{stockCount,jdbcType=INTEGER},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -186,8 +200,8 @@
       <if test="stockCount != null">
         stock_count = #{stockCount,jdbcType=INTEGER},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -207,8 +221,92 @@
       end_time = #{endTime,jdbcType=TIMESTAMP},
       product_count = #{productCount,jdbcType=INTEGER},
       stock_count = #{stockCount,jdbcType=INTEGER},
-      desc = #{desc,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <sql id="consutomsql" >
+		<if test="constomProduct != null">
+			<if test="constomProduct.productId!=null and constomProduct.productId!=''">
+					and product_id = "${constomProduct.productId}"
+			</if>
+			<if test="constomProduct.productTitle!=null and constomProduct.productTitle!='' ">
+					and product_title  like "%${constomProduct.productTitle}%"
+			</if>
+			<if test="constomProduct.startmiaoshaprice!=null and constomProduct.startmiaoshaprice!='' ">
+					and miaosha_price  <![CDATA[ >= ]]>  "${constomProduct.startmiaoshaprice}"
+			</if>
+			<if test="constomProduct.endmiaoshaprice != null and constomProduct.endmiaoshaprice!=''">
+			
+				and miaosha_price <![CDATA[ <= ]]> "${constomProduct.endmiaoshaprice}"
+			</if>
+		
+			<if test="constomProduct.startoriginalprice!=null and constomProduct.startoriginalprice!='' ">
+					and product_og_price  <![CDATA[ >= ]]>  "${constomProduct.startoriginalprice}"
+			</if>
+			<if test="constomProduct.endoriginalprice!=null and constomProduct.endoriginalprice!='' " >
+					and product_og_price  <![CDATA[ <= ]]>  "${constomProduct.endoriginalprice}"
+			</if>
+			<if test="constomProduct.endstockcount!=null and constomProduct.endstockcount!='' ">
+					and stock_count  <![CDATA[ <= ]]>  "${constomProduct.endstockcount}"
+			</if>
+			<if test="constomProduct.description!=null and constomProduct.description!=''">
+					and description like "%${constomProduct.description}%"
+			</if>
+			<if test="constomProduct.endapplydate!=null and constomProduct.endapplydate!='' ">
+					and applay_date  <![CDATA[ <= ]]>  "${constomProduct.endapplydate}"
+			</if>
+
+			<if test="constomProduct.endauditdate!=null and constomProduct.endauditdate!='' ">
+					and applay_date  <![CDATA[ <= ]]>  "${constomProduct.endauditdate}"
+			</if>
+			<if test="constomProduct.startapplydate!=null and constomProduct.startapplydate!='' ">
+					and applay_date  <![CDATA[ >= ]]>  "${constomProduct.startapplydate}"
+			</if>
+			<if test="constomProduct.startauditdate!=null and constomProduct.startauditdate!='' ">
+					and aidot_date  <![CDATA[ >= ]]>  "${constomProduct.startauditdate}"
+			</if>
+			<if test="constomProduct.aidotStatus!=null and constomProduct.aidotStatus!='' ">
+					and aidot_status = "${constomProduct.auditState}"
+			</if>
+			<if test="constomProduct.startstarttime!=null and constomProduct.startstarttime!='' ">
+					and start_time  <![CDATA[ >= ]]>  "${constomProduct.startstarttime}"
+			</if>
+			<if test="constomProduct.endstarttime!=null and constomProduct.endstarttime!='' ">
+					and start_time  <![CDATA[ <= ]]>  "${constomProduct.endstarttime}"
+			</if>
+			<if test="constomProduct.startendtime!=null and constomProduct.startendtime!='' ">
+					and end_time  <![CDATA[ >= ]]>  "${constomProduct.startendtime}"
+			</if>
+			<if test="constomProduct.endendtime!=null and constomProduct.endendtime!='' ">
+					and end_time  <![CDATA[ <= ]]>  "${constomProduct.endendtime}"
+			</if>
+			<if test="constomProduct.startproductcount!=null and constomProduct.startproductcount!='' ">
+					and product_count  <![CDATA[ >= ]]>  "${constomProduct.startproductcount}"
+			</if>
+			<if test="constomProduct.endproductcount!=null and constomProduct.endproductcount!='' ">
+					and product_count  <![CDATA[ <= ]]>  "${constomProduct.endproductcount}"
+			</if>
+			<if test="constomProduct.startstockcount!=null and constomProduct.startstockcount!='' ">
+					and stock_count  <![CDATA[ >= ]]>  "${constomProduct.startstockcount}"
+			</if>
+			<if test="constomProduct.endstockcount!=null and constomProduct.endstockcount!='' ">
+					and stock_count  <![CDATA[ <= ]]>  "${constomProduct.endstockcount}"
+			</if>
+		</if>
+	</sql>
+	
+	<select id="listMsProduct" parameterType="com.yaosiyuan.vo.MsProductVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+	from ms_product_info
+    	<where>
+			<include refid="consutomsql"></include>
+		</where>
+	</select>
+	
+	<update id="updateProductState" parameterType="com.yaosiyuan.vo.MsProductVo">
+		update ms_product_info set aidot_status=#{constomProduct.aidotStatus} where id=#{constomProduct.id}
+	</update>
  
 </mapper>

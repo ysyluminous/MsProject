@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="add"> 
+<form action="add" method = "post"> 
 	商家的姓名:<input name="merchantName"></br>
 	商家的店铺名称:<input name="merchantShopName"></br>
 	商家账号:<input name="merchantAccount"></br>

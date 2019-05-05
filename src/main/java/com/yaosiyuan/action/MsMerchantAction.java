@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yaosiyuan.entity.MsMerchant;
 import com.yaosiyuan.service.MsMerchantService;
@@ -39,12 +40,12 @@ public class MsMerchantAction {
 		return "merchant/add";
 	}
 
-	@RequestMapping("add")
-	public void Add(MsMerchant merchant) {
+	@RequestMapping(value = "add", method = RequestMethod.POST)
+	public String Add(MsMerchant merchant) {
 		int insert = msMerchantService.insert(merchant);
 
 		System.out.println(insert);
-		// return "merchant/add";
+		return "redirect:queryByVo";
 	}
 
 	@RequestMapping("toUpdate")
@@ -55,21 +56,21 @@ public class MsMerchantAction {
 		return "merchant/update";
 	}
 
-	@RequestMapping("update")
-	public void update(HttpServletRequest request, MsMerchant merchant) {
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String update(HttpServletRequest request, MsMerchant merchant) {
 		System.out.println(merchant);
 		int updateByPrimaryKey = msMerchantService.updateByPrimaryKey(merchant);
 
 		System.out.println(updateByPrimaryKey);
-		// return "merchant/add";
+		return "redirect:queryByVo";
 	}
 
 	@RequestMapping("del")
-	public void del(HttpServletRequest request, int id) {
+	public String del(HttpServletRequest request, int id) {
 		int deleteByPrimaryKey = msMerchantService.deleteByPrimaryKey(id);
 
 		System.out.println(deleteByPrimaryKey);
-		// return "merchant/add";
+		return "redirect:queryByVo";
 	}
 
 	@RequestMapping("queryById")

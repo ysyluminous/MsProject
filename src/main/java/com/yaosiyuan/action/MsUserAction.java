@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yaosiyuan.entity.MsUser;
 import com.yaosiyuan.service.MsUserService;
@@ -24,10 +25,11 @@ public class MsUserAction {
 		return "user/add";
 	}
 
-	@RequestMapping(value = "add")
-	public void add(MsUser msUser) {
+	@RequestMapping(value = "add", method = RequestMethod.POST)
+	public String add(MsUser msUser) {
 		msUserService.insert(msUser);
 		System.out.println(msUser);
+		return "redirect:queryByVo";
 	}
 
 	@RequestMapping("toUpDate")
@@ -37,15 +39,17 @@ public class MsUserAction {
 		return "user/update";
 	}
 
-	@RequestMapping("upDate")
-	public void update(HttpServletRequest request, MsUser msUser) {
+	@RequestMapping(value = "upDate", method = RequestMethod.POST)
+	public String update(HttpServletRequest request, MsUser msUser) {
 		msUserService.updateByPrimaryKey(msUser);
 		System.out.println(msUser);
+		return "redirect:queryByVo";
 	}
 
 	@RequestMapping("del")
-	public void del(HttpServletRequest request, int id) {
+	public String del(HttpServletRequest request, int id) {
 		msUserService.deleteByPrimaryKey(id);
+		return "redirect:queryByVo";
 	}
 
 	@RequestMapping("queryById")

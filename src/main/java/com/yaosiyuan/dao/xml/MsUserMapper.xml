@@ -28,8 +28,8 @@
     insert into ms_user (id, user_name, user_account, 
       user_password, user_sex, user_age, 
       user_address, user_email)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{user_account,jdbcType=VARCHAR}, 
-      #{user_password,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, #{userAge,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, 
+      #{userPassword,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, #{userAge,jdbcType=INTEGER}, 
       #{userAddress,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yaosiyuan.entity.MsUser">
@@ -94,10 +94,10 @@
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="user_account != null">
-        user_account = #{user_account,jdbcType=VARCHAR},
+        user_account = #{userAccount,jdbcType=VARCHAR},
       </if>
       <if test="user_password != null">
-        user_password = #{user_password,jdbcType=VARCHAR},
+        user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
       <if test="userSex != null">
         user_sex = #{userSex,jdbcType=INTEGER},
@@ -117,8 +117,8 @@
   <update id="updateByPrimaryKey" parameterType="com.yaosiyuan.entity.MsUser">
     update ms_user
     set user_name = #{userName,jdbcType=VARCHAR},
-      user_account = #{user_account,jdbcType=VARCHAR},
-      user_password = #{user_password,jdbcType=VARCHAR},
+      user_account = #{userAccount,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
       user_sex = #{userSex,jdbcType=INTEGER},
       user_age = #{userAge,jdbcType=INTEGER},
       user_address = #{userAddress,jdbcType=VARCHAR},

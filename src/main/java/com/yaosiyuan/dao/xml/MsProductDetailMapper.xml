@@ -20,7 +20,7 @@
     select 
     <include refid="Base_Column_List" />
     from ms_product_detail
-    where id = #{id,jdbcType=INTEGER}
+    where product_id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from ms_product_detail
@@ -125,7 +125,7 @@
         image_src = #{imageSrc,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where product_id = #{productId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yaosiyuan.entity.MsProductDetail">
     update ms_product_detail
@@ -137,7 +137,7 @@
       product_weight = #{productWeight,jdbcType=VARCHAR},
       specification = #{specification,jdbcType=VARCHAR},
       image_src = #{imageSrc,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where product_id = #{productId,jdbcType=INTEGER}
   </update>
  
 </mapper>

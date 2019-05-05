@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="update"> 
+<form action="update" method="post"> 
 		id:<input name="id" value="${merchant.id}" type="hidden"></br>
 	商家的姓名:<input name="merchantName" value="${merchant.merchantName}"></br>
 	商家的店铺名称:<input name="merchantShopName" value="${merchant.merchantShopName}"></br>
