@@ -254,32 +254,32 @@
 					and description like "%${constomProduct.description}%"
 			</if>
 			<if test="constomProduct.endapplydate!=null and constomProduct.endapplydate!='' ">
-					and applay_date  <![CDATA[ <= ]]>  "${constomProduct.endapplydate}"
+					and applay_date  <![CDATA[ <= ]]> STR_TO_DATE(#{constomProduct.endapplydate},'%Y-%m-%d %H:%i:%S')
 			</if>
 
 			<if test="constomProduct.endauditdate!=null and constomProduct.endauditdate!='' ">
-					and applay_date  <![CDATA[ <= ]]>  "${constomProduct.endauditdate}"
+					and applay_date  <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endauditdate},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.startapplydate!=null and constomProduct.startapplydate!='' ">
-					and applay_date  <![CDATA[ >= ]]>  "${constomProduct.startapplydate}"
+					and applay_date  <![CDATA[ >= ]]>  STR_TO_DATE(#{constomUser.startapplydate},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.startauditdate!=null and constomProduct.startauditdate!='' ">
-					and aidot_date  <![CDATA[ >= ]]>  "${constomProduct.startauditdate}"
+					and aidot_date  <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startauditdate},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.aidotStatus!=null and constomProduct.aidotStatus!='' ">
-					and aidot_status = "${constomProduct.auditState}"
+					and aidot_status = "${constomProduct.aidotStatus}"
 			</if>
 			<if test="constomProduct.startstarttime!=null and constomProduct.startstarttime!='' ">
-					and start_time  <![CDATA[ >= ]]>  "${constomProduct.startstarttime}"
+					and start_time  <![CDATA[ >= ]]>  STR_TO_DATE(#{constomProduct.startstarttime},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.endstarttime!=null and constomProduct.endstarttime!='' ">
-					and start_time  <![CDATA[ <= ]]>  "${constomProduct.endstarttime}"
+					and start_time  <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endstarttime},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.startendtime!=null and constomProduct.startendtime!='' ">
-					and end_time  <![CDATA[ >= ]]>  "${constomProduct.startendtime}"
+					and end_time  <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startendtime},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.endendtime!=null and constomProduct.endendtime!='' ">
-					and end_time  <![CDATA[ <= ]]>  "${constomProduct.endendtime}"
+					and end_time  <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endendtime},'%Y-%m-%d %H:%i:%S')
 			</if>
 			<if test="constomProduct.startproductcount!=null and constomProduct.startproductcount!='' ">
 					and product_count  <![CDATA[ >= ]]>  "${constomProduct.startproductcount}"

@@ -19,4 +19,6 @@ public interface MsMerchantMapper {
 	int updateByPrimaryKey(MsMerchant record);
 
 	List<MsMerchant> queryMsmerchantByVo(MsMerchantVo msMerchantVo);
+
+	MsMerchant selectByMerchantAccount(String merchantAccount);
 }

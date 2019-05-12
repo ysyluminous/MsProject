@@ -8,8 +8,6 @@
 */
 package com.yaosiyuan.vo;
 
-import java.util.Date;
-
 import com.yaosiyuan.entity.MsProductInfo;
 
 /**
@@ -27,17 +25,18 @@ public class ConstomProduct extends MsProductInfo {
 	private int startoriginalprice;// 商品原价查询范围开始
 	private int endoriginalprice;// 商品原价查询范围结束
 
-	private Date startapplydate;// 申请时间查询范围开始时间
-	private Date endapplydate;// 申请时间查询范围结束时间
+	private String startapplydate;// 申请时间查询范围开始时间
+	private String endapplydate;// 申请时间查询范围结束时间
 
-	private Date startauditdate;// 审核时间查询范围开始时间
-	private Date endauditdate;// 审核时间查询范围结束时间
+	private String startauditdate;// 审核时间查询范围开始时间
+	private String endauditdate;// 审核时间查询范围结束时间
 
-	private Date startstarttime;// 秒杀开始时间查询范围开始时间
-	private Date endstarttime;// 秒杀开始时间查询范围结束时间
+	private String startstarttime;// 秒杀开始时间查询范围开始时间
+	private String endstarttime;// 秒杀开始时间查询范围结束时间
 
-	private Date startendtime;// 秒杀结束时间查询范围开始时间
-	private Date endendtime;// 秒杀结束时间查询范围结束时间
+	private String startendtime;// 秒杀结束时间查询范围开始时间
+
+	private String endendtime;// 秒杀结束时间查询范围结束时间
 
 	private int startproductcount;// 秒杀商品数开始范围
 	private int endproductcount;// 秒杀商品数结束范围
@@ -77,67 +76,67 @@ public class ConstomProduct extends MsProductInfo {
 		this.endoriginalprice = endoriginalprice;
 	}
 
-	public Date getStartapplydate() {
+	public String getStartapplydate() {
 		return startapplydate;
 	}
 
-	public void setStartapplydate(Date startapplydate) {
+	public void setStartapplydate(String startapplydate) {
 		this.startapplydate = startapplydate;
 	}
 
-	public Date getEndapplydate() {
+	public String getEndapplydate() {
 		return endapplydate;
 	}
 
-	public void setEndapplydate(Date endapplydate) {
+	public void setEndapplydate(String endapplydate) {
 		this.endapplydate = endapplydate;
 	}
 
-	public Date getStartauditdate() {
+	public String getStartauditdate() {
 		return startauditdate;
 	}
 
-	public void setStartauditdate(Date startauditdate) {
+	public void setStartauditdate(String startauditdate) {
 		this.startauditdate = startauditdate;
 	}
 
-	public Date getEndauditdate() {
+	public String getEndauditdate() {
 		return endauditdate;
 	}
 
-	public void setEndauditdate(Date endauditdate) {
+	public void setEndauditdate(String endauditdate) {
 		this.endauditdate = endauditdate;
 	}
 
-	public Date getStartstarttime() {
+	public String getStartstarttime() {
 		return startstarttime;
 	}
 
-	public void setStartstarttime(Date startstarttime) {
+	public void setStartstarttime(String startstarttime) {
 		this.startstarttime = startstarttime;
 	}
 
-	public Date getEndstarttime() {
+	public String getEndstarttime() {
 		return endstarttime;
 	}
 
-	public void setEndstarttime(Date endstarttime) {
+	public void setEndstarttime(String endstarttime) {
 		this.endstarttime = endstarttime;
 	}
 
-	public Date getStartendtime() {
+	public String getStartendtime() {
 		return startendtime;
 	}
 
-	public void setStartendtime(Date startendtime) {
+	public void setStartendtime(String startendtime) {
 		this.startendtime = startendtime;
 	}
 
-	public Date getEndendtime() {
+	public String getEndendtime() {
 		return endendtime;
 	}
 
-	public void setEndendtime(Date endendtime) {
+	public void setEndendtime(String endendtime) {
 		this.endendtime = endendtime;
 	}
 
@@ -172,4 +171,5 @@ public class ConstomProduct extends MsProductInfo {
 	public void setEndstockcount(int endstockcount) {
 		this.endstockcount = endstockcount;
 	}
+
 }

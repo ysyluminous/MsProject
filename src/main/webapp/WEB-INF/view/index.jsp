@@ -60,7 +60,57 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+		<!-- 秒杀商品  -->
 
+<div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">秒杀商品列表</h3>
+
+              <div class="box-tools">
+               <!-- <button  type="button" class="btn btn-block btn-default" onclick="location='toApplyMsProduct'">申请秒杀商品</button> -->
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody>
+                	<tr>
+		                   
+							<th>商品标题</th>
+							<th>图片地址</th>
+							<th>秒杀价格</th>
+							<th>秒杀原价</th>
+							
+							
+							<th>秒杀开始时间</th>
+							<th>秒杀结束时间</th>
+							<th>查看</th>
+							
+                	</tr>
+               <c:forEach items="${listMsProduct}" var="item">
+                <tr>
+	                   
+						<th>${item.productTitle }</th>
+						<th>${item.productPic }</th>
+						<th>${item.miaoshaPrice }</th>
+						<th>${item.productOgPrice }</th>
+						<th>${item.startTime }</th>
+						<th>${item.endTime }</th>
+						<th><span class="label label-success"><a href="viewProductDetail?id=${item.id}">123</a></span>
+						</th>
+						
+                </tr>
+                </c:forEach>
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+	
     </section>
     <!-- /.content -->
   </div>

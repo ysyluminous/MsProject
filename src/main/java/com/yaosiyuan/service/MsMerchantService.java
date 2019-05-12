@@ -64,4 +64,9 @@ public class MsMerchantService {
 		return msMerchantMapper.queryMsmerchantByVo(msMerchantVo);
 
 	}
+
+	public MsMerchant selectByMerchantAccount(String merchantAccount) {
+		return msMerchantMapper.selectByMerchantAccount(merchantAccount);
+
+	}
 }

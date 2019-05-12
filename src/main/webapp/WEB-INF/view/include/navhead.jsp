@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 顶部导航栏部分 -->
 <header class="main-header">
 
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>秒杀</b>系统</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>秒杀</b>系统</span>
     </a>
 
     <!-- Header Navbar -->
@@ -18,10 +19,10 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
+     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
+       <%--    <li class="dropdown messages-menu">
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
@@ -115,7 +116,7 @@
                 <a href="#">View all tasks</a>
               </li>
             </ul>
-          </li>
+          </li> --%>
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
@@ -123,7 +124,22 @@
               <!-- The user image in the navbar-->
               <img src="${pageContext.request.contextPath }/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">
+              
+              <c:choose>
+                 <c:when test="${onLine.status == '1'}">
+                	 	 <!-- 如果为1 则 用户登陆， 显示用户退出 -->
+				 	  欢迎您${onLine.msUser.userName}
+                	</c:when>
+                	<c:when test="${onLine.status == '2'}">
+                	 	 <!-- 如果为2 则 商户登陆， 显示商户退出 -->
+				 	  店铺名:${onLine.msMerchant.merchantShopName}
+                	</c:when>
+                	<c:otherwise>
+                	  请登录
+               	 </c:otherwise>
+				</c:choose> 
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -131,41 +147,95 @@
                 <img src="${pageContext.request.contextPath }/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+	                <c:choose>
+					    <c:when test="${onLine == null || onLine==''}">
+					        <!-- 顶部未登录 -->
+					        请登录
+					    </c:when>
+					    <c:otherwise>
+					        <!-- 顶部已登录 -->
+					        ${onLine.msUser.userName }
+					    </c:otherwise>
+					</c:choose>
+                  <small> --</small>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
+	            <!--   <li class="user-body">
+	                 <div class="row">
+	                  <div class="col-xs-4 text-center">
+	                    <a href="#">Followers</a>
+	                  </div>
+	                  <div class="col-xs-4 text-center">
+	                    <a href="#">Sales</a>
+	                  </div>
+	                  <div class="col-xs-4 text-center">
+	                    <a href="#">Friends</a>
+	                  </div>
+	                </div>
+	                /.row
+	              </li> -->
               <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="${pageContext.request.contextPath }/userRegAndLogAction/toRegiter" class="btn btn-default btn-flat">注册</a>
-                </div>
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
+              
+              <!-- 用户和商家都没登陆 -->
+              
+             <!-- 如果为空  表示没有登陆
+             	显示 用户和商户的 注册和登陆
+               -->
+               
+                
+                <c:choose>
+                 <c:when test="${onLine.status == '1'}">
+               	 	 <!-- 如果为1 则 用户登陆， 显示用户退出，和订单 -->
+				 	 <li class="user-footer">
+						 	 <div class="pull-left">
+						         <a href="${pageContext.request.contextPath }/orderAction/queryOrderByUserId" 
+						         class="btn btn-default btn-flat">我的订单</a>
+				            </div>
+				            <div class="pull-right">
+				                <a href="${pageContext.request.contextPath }/userRegAndLogAction/signOut" class="btn btn-default btn-flat">用户退出</a>
+				            </div>
+				        </li>
+                	</c:when>
+                	<c:when test="${onLine.status == '2'}">
+                	 	 <!-- 如果为2 则 商户登陆， 显示商户退出 -->
+				 	 <li class="user-footer">
+					 			 <div class="pull-left">
+					                <a href="${pageContext.request.contextPath }/orderAction/orderListByMerId" class="btn btn-default btn-flat">商家订单</a>
+					            </div>
+				            <div class="pull-right">
+				                <a href="${pageContext.request.contextPath }/userRegAndLogAction/signOut" class="btn btn-default btn-flat">商户退出</a>
+				            </div>
+				        </li>
+                	</c:when>
+                	<c:otherwise>
+                	 <li class="user-footer">
+				          <!-- 用户未登录 -->
+				            <div class="pull-left">
+				                <a href="${pageContext.request.contextPath }/userRegAndLogAction/toLogin" class="btn btn-default btn-flat">用户登录</a>
+				            </div>
+				            <div class="pull-right">
+				                <a href="${pageContext.request.contextPath }/userRegAndLogAction/toRegiter" class="btn btn-default btn-flat">用户注册</a>
+				            </div>
+				        </li>
+				        
+				        <li class="user-footer">
+				            <!-- 商户未登录 -->
+				            <div class="pull-left">
+				                <a href="${pageContext.request.contextPath }/merchantRegAndLogAction/toLogin" class="btn btn-default btn-flat">商户登录</a>
+				            </div>
+				            <div class="pull-right">
+				                <a href="${pageContext.request.contextPath }/merchantRegAndLogAction/toRegiter" class="btn btn-default btn-flat">商户注册</a>
+				            </div>
+				        </li>
+               	 </c:otherwise>
+				</c:choose> 
+				
+              
             </ul>
           </li>
           
         </ul>
-      </div>
+      </div> 
     </nav>
   </header>

@@ -61,4 +61,10 @@ public class MsUserService {
 		return msUserMapper.queryMsUserByVo(msUserVo);
 
 	}
+
+	public MsUser selectByUserAccount(String userAccount) {
+		return msUserMapper.selectByUserAccount(userAccount);
+
+	}
+
 }

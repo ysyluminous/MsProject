@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -8,8 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
   <title>AdminLTE 2 | Starter</title>
  <%@include file="../include/css.jsp"%>
 </head>
@@ -61,18 +60,36 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-	 <form action="regiter" method="post">
-		用户姓名:<input name="name"></br>
-		用户账号:<input name="useraccount"></br>
-		用户密码:<input name="userpassword"></br>
-		用户性别:<input name="usersex"></br>
-		用户年龄:<input name="userage"></br>
-		用户的地址:<input name="useraddress"></br>
-		用户的邮箱:<input name="useremail"></br>
-		<input type="button" value="提交" onclick="submit(this)">
-	</form>
+		<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Quick Example</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form"   action="orderPay" method="post">
+              <div class="box-body">
+              	支付方式
+				1，代表支付宝<input type="radio" name="payType" value="1">
+				2,代表微信<input type="radio" name="payType" value="2">
+				3,代表银联<input type="radio" name="payType" value="3">
+				支付总额：${payAmount}
+				流水号：${tradeId}
+				<input type="hidden" name="payAmount" value="${payAmount}">
+				<input type="hidden" name="tradeId" value="${tradeId}">
+				<input type="hidden" name="id" value="${id}">
+				<%-- 
+             	 <div class="form-group">
+                  <label>商品名称：</label>
+                  <input type="text" class="form-control" name="productTitle" placeholder="${msProductInfo.productTitle}" disabled="">
+                </div> --%>
+              </div>
+              <!-- /.box-body -->
 
-
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary" onclick="submit(this)">立即付款</button>
+              </div>
+            </form>
+          </div>
     </section>
     <!-- /.content -->
   </div>
@@ -87,9 +104,9 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
  <%@include file="../include/js.jsp"%>
 <script type="text/javascript">
-	function submit(obj){
-		obj.parent.sumbit();
-	}
+function submit(obj){
+	obj.parent.sumbit();
+}
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -97,9 +114,3 @@ desired effect
      user experience. -->
 </body>
 </html>
-
-
-
-
-
-

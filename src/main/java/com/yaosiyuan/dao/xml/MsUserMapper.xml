@@ -20,6 +20,16 @@
     from ms_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_user
+    where user_account = #{userAccount,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from ms_user
     where id = #{id,jdbcType=INTEGER}

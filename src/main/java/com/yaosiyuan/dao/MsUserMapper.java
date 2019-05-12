@@ -19,4 +19,6 @@ public interface MsUserMapper {
 	int updateByPrimaryKey(MsUser record);
 
 	List<MsUser> queryMsUserByVo(MsUserVo msUserVo);
+
+	MsUser selectByUserAccount(String userAccount);
 }

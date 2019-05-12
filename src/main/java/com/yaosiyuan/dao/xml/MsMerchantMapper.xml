@@ -18,6 +18,18 @@
     from ms_merchant
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
+  <select id="selectByMerchantAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_merchant
+    where merchant_account = #{merchantAccount,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="int">
     delete from ms_merchant
     where id = #{id,jdbcType=INTEGER}

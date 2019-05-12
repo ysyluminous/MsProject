@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -8,8 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
   <title>AdminLTE 2 | Starter</title>
  <%@include file="../include/css.jsp"%>
 </head>
@@ -61,70 +60,73 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
- <div class="row">
-        <div class="col-xs-12">
+		<div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">秒杀商品列表</h3>
+              <h3 class="box-title">订单列表</h3>
 
               <div class="box-tools">
-               <button  type="button" class="btn btn-block btn-default" onclick="location='toApplyMsProduct'">申请秒杀商品</button>
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
-                <tbody>
-                	<tr>
-		                    <th>商品id</th>
-							<th>商品标题</th>
-							<th>图片地址</th>
-							<th>秒杀价格</th>
-							<th>商家id</th>
-							<th>秒杀原价</th>
-							<th>申请时间</th>
-							<th>状态</th>
-							<th>秒杀开始时间</th>
-							<th>秒杀结束时间</th>
-							<th>秒杀商品数</th>
-							<th>库存</th>
-							<th>商品描述</th>
-							<th>操作</th>
-                	</tr>
-               <c:forEach items="${listMsProduct}" var="item">
-                <tr>
-	                    <th>${item.productId }</th>
-						<th>${item.productTitle }</th>
-						<th>${item.productPic }</th>
-						<th>${item.miaoshaPrice }</th>
-						<th>${item.merchant }</th>
-						<th>${item.productOgPrice }</th>
-						<th>${item.applayDate }</th>
-						<th>${item.aidotStatus }</th>
-						<th>${item.startTime }</th>
-						<th>${item.endTime }</th>
-						<th>${item.productCount }</th>
-						<th>${item.stockCount }</th>
-						<th>${item.description }</th>
-						<th>
-							<a href="toUpdateMsProduct?id=${item.id}">修改</a>||
-							<a href="deletemsproductByid?id=${item.id}">删除</a>||
-							<a href="queryMsProductByid?id=${item.id}">查看</a>||
-							<a href="toupdatemsproductstate?id=${item.id}">审核</a>||
-							<a href="${pageContext.request.contextPath }/msProductDetailAction/toInsertMsProductDetail?productId=${item.id}&&merchant=${item.merchant}">
-							添加商品详情</a>||
-							<a href="${pageContext.request.contextPath }/msProductDetailAction/queryMsProductdetailByid?productId=${item.id}">查看商品详情</a>||
-							<a href="${pageContext.request.contextPath }/msProductDetailAction/toUpdateMsProductDetail?productId=${item.id}">修改商品详情</a></th>
-						</th> 
+                <tbody><tr>
+                    <th>支付金额</th>
+					<th>订单生成时间</th>
+					<th>支付转态</th>
+					<th>收货人地址</th>
+					<th>收货人电话</th>
+					<th>收货人名称</th>
+					<th>交易流水号</th>
+					<th>购买数量</th>
+					<th>支付类型</th>
+					<th>操作</th>
                 </tr>
+                 <c:forEach items="${orderList}" var="item" >
+	                <tr>
+	                    <td>${item.payAmount }</td>
+						<td>${item.createTime }</td>
+						<td>${item.payStatus }</td>
+						<td>${item.receiveAddress }</td>
+						<td>${item.receivePhone }</td>
+						<td>${item.receiveName }</td>
+						<td>${item.tradeId }</td>
+						<td>${item.num }</td>
+						<td>${item.payType }</td>
+						<!-- int orderid,int paytype -->
+						<td> 
+							<c:if test="${item.payStatus == 1 }">
+							未支付
+							</c:if>
+								<c:if test="${item.payStatus == 2 }">支付完成
+						 		</c:if> 
+							<c:if test="${item.payStatus == 3 }">退款成功</c:if>
+							<c:if test="${item.payStatus == 4 }">退款申请中
+								<a href="javascript:void" onclick="auditRefund('${pageContext.request.contextPath }',
+								'${item.tradeId}','${item.payAmount}','${item.id}','${item.payType}','3')">退款审核通过</a>
+								||
+								<a href="javascript:void" onclick="auditRefund('${pageContext.request.contextPath }',
+								'${item.tradeId}','${item.payAmount}','${item.id}','${item.payType}','5')">退款审核不通过</a>
+							</c:if>
+							<c:if test="${item.payStatus == 5 }">退款申请不成功</c:if>
+						</td>
+					</tr>
                 </c:forEach>
+                
               </tbody></table>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
-      </div>
     </section>
     <!-- /.content -->
   </div>
@@ -138,16 +140,15 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
  <%@include file="../include/js.jsp"%>
+<script type="text/javascript">
 
+function  auditRefund(url,tradeId,payAmount,orderId,payType,payStatus){
+	window.location.href=url+"/orderAction/auditRefund?tradeId="+tradeId+"&&payAmount="+payAmount+"&&orderId="+orderId+"&&payType="+payType+"&&payStatus="+payStatus;
+}
+</script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
 </body>
 </html>
-
-
-
-
-
-

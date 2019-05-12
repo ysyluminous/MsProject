@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -8,8 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
   <title>AdminLTE 2 | Starter</title>
  <%@include file="../include/css.jsp"%>
 </head>
@@ -61,14 +60,18 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
- <div class="row">
+		<!-- 秒杀商品  -->
+<form action="${pageContext.request.contextPath }/orderAction/toPayOrder">
+		
+		<input type="hidden" name="id" value="${msproduct.id}">
+<div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">秒杀商品列表</h3>
+              <h3 class="box-title">111</h3>
 
               <div class="box-tools">
-               <button  type="button" class="btn btn-block btn-default" onclick="location='toApplyMsProduct'">申请秒杀商品</button>
+               <!-- <button  type="button" class="btn btn-block btn-default" onclick="location='toApplyMsProduct'">申请秒杀商品</button> -->
               </div>
             </div>
             <!-- /.box-header -->
@@ -76,55 +79,89 @@ desired effect
               <table class="table table-hover">
                 <tbody>
                 	<tr>
-		                    <th>商品id</th>
+		                   
 							<th>商品标题</th>
 							<th>图片地址</th>
 							<th>秒杀价格</th>
-							<th>商家id</th>
 							<th>秒杀原价</th>
-							<th>申请时间</th>
-							<th>状态</th>
 							<th>秒杀开始时间</th>
 							<th>秒杀结束时间</th>
 							<th>秒杀商品数</th>
+							<th>秒杀数量</th>
 							<th>库存</th>
-							<th>商品描述</th>
-							<th>操作</th>
+							
                 	</tr>
-               <c:forEach items="${listMsProduct}" var="item">
+             
                 <tr>
-	                    <th>${item.productId }</th>
-						<th>${item.productTitle }</th>
-						<th>${item.productPic }</th>
-						<th>${item.miaoshaPrice }</th>
-						<th>${item.merchant }</th>
-						<th>${item.productOgPrice }</th>
-						<th>${item.applayDate }</th>
-						<th>${item.aidotStatus }</th>
-						<th>${item.startTime }</th>
-						<th>${item.endTime }</th>
-						<th>${item.productCount }</th>
-						<th>${item.stockCount }</th>
-						<th>${item.description }</th>
-						<th>
-							<a href="toUpdateMsProduct?id=${item.id}">修改</a>||
-							<a href="deletemsproductByid?id=${item.id}">删除</a>||
-							<a href="queryMsProductByid?id=${item.id}">查看</a>||
-							<a href="toupdatemsproductstate?id=${item.id}">审核</a>||
-							<a href="${pageContext.request.contextPath }/msProductDetailAction/toInsertMsProductDetail?productId=${item.id}&&merchant=${item.merchant}">
-							添加商品详情</a>||
-							<a href="${pageContext.request.contextPath }/msProductDetailAction/queryMsProductdetailByid?productId=${item.id}">查看商品详情</a>||
-							<a href="${pageContext.request.contextPath }/msProductDetailAction/toUpdateMsProductDetail?productId=${item.id}">修改商品详情</a></th>
-						</th> 
+						<th>${msproduct.productTitle }</th>
+						<th>${msproduct.productPic }</th>
+						<th>${msproduct.miaoshaPrice }</th>
+						<th>${msproduct.productOgPrice }</th>
+						<th>${msproduct.startTime }</th>
+						<th>${msproduct.endTime }</th>
+						<th>？</th>
+						<th>${msproduct.productCount }</th>
+						<th>${msproduct.stockCount }</th>
                 </tr>
-                </c:forEach>
-              </tbody></table>
+             
+              </tbody>
+              </table>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
       </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">222</h3>
+
+              <div class="box-tools">
+               <!-- <button  type="button" class="btn btn-block btn-default" onclick="location='toApplyMsProduct'">申请秒杀商品</button> -->
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody>
+                	<tr>
+						<th>商品产地</th>
+						<th>商品名称</th>
+						<th>商品品牌</th>
+						<th>商品重量</th>
+						<th>规格和包装</th>
+						<th>商品详情图片地址</th>
+                	</tr>
+                <tr>
+						<td>${msproductDetail.productPalce}</td>
+						<td>${msproductDetail.productName}</td>
+						<td>${msproductDetail.brandName}</td>
+						<td>${msproductDetail.productWeight}</td>
+						<td>${msproductDetail.specification}</td>
+						<td>${msproductDetail.imageSrc}</td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <div class="input-group input-group-sm" style="width: 250px;">
+                  <input type="text" name="num" class="form-control pull-right" placeholder="输入购买数量">
+
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="">立即购买</i></button>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+ <input type="button" value="立即购买" onclick="submit(this)"/>
+</form>
+	
     </section>
     <!-- /.content -->
   </div>
@@ -138,16 +175,14 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
  <%@include file="../include/js.jsp"%>
-
+<script type="text/javascript">
+function submit(obj){
+	obj.parent.sumbit();
+}
+</script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
 </body>
 </html>
-
-
-
-
-
-
