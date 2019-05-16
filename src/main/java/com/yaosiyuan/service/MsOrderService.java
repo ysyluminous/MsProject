@@ -33,7 +33,6 @@ public class MsOrderService {
 
 	public int insert(MsOrder record) {
 		return msOrderMapper.insert(record);
-
 	}
 
 	public List<MsOrder> queryOrderByUserId(Integer userId) {
