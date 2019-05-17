@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaosiyuan.dao.MsProductDetailMapper">
+  <resultMap id="BaseResultMap" type="com.yaosiyuan.entity.MsProductDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="product_palce" jdbcType="VARCHAR" property="productPalce" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="product_weight" jdbcType="VARCHAR" property="productWeight" />
+    <result column="specification" jdbcType="VARCHAR" property="specification" />
+    <result column="image_src" jdbcType="VARCHAR" property="imageSrc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_id, merchant_id, product_palce, product_name, brand_name, product_weight, 
+    specification, image_src
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_product_detail
+    where product_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ms_product_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yaosiyuan.entity.MsProductDetail">
+    insert into ms_product_detail (id, product_id, merchant_id, 
+      product_palce, product_name, brand_name, 
+      product_weight, specification, image_src
+      )
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, 
+      #{productPalce,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, 
+      #{productWeight,jdbcType=VARCHAR}, #{specification,jdbcType=VARCHAR}, #{imageSrc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yaosiyuan.entity.MsProductDetail">
+    insert into ms_product_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="productPalce != null">
+        product_palce,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="productWeight != null">
+        product_weight,
+      </if>
+      <if test="specification != null">
+        specification,
+      </if>
+      <if test="imageSrc != null">
+        image_src,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="productPalce != null">
+        #{productPalce,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="productWeight != null">
+        #{productWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="imageSrc != null">
+        #{imageSrc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yaosiyuan.entity.MsProductDetail">
+    update ms_product_detail
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="productPalce != null">
+        product_palce = #{productPalce,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="productWeight != null">
+        product_weight = #{productWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="imageSrc != null">
+        image_src = #{imageSrc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yaosiyuan.entity.MsProductDetail">
+    update ms_product_detail
+    set product_id = #{productId,jdbcType=INTEGER},
+      merchant_id = #{merchantId,jdbcType=INTEGER},
+      product_palce = #{productPalce,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      product_weight = #{productWeight,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      image_src = #{imageSrc,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

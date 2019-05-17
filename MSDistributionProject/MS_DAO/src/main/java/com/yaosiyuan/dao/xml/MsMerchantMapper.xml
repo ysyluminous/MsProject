@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaosiyuan.dao.MsMerchantMapper">
+  <resultMap id="BaseResultMap" type="com.yaosiyuan.entity.MsMerchant">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="merchant_shop_name" jdbcType="VARCHAR" property="merchantShopName" />
+    <result column="merchant_account" jdbcType="VARCHAR" property="merchantAccount" />
+    <result column="merchant_password" jdbcType="VARCHAR" property="merchantPassword" />
+    <result column="merchant_scope" jdbcType="VARCHAR" property="merchantScope" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, merchant_name, merchant_shop_name, merchant_account, merchant_password, merchant_scope
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_merchant
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByMerchantAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_merchant
+    where merchant_account = #{merchantAccount,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="int">
+    delete from ms_merchant
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yaosiyuan.entity.MsMerchant">
+    insert into ms_merchant (id, merchant_name, merchant_shop_name, 
+      merchant_account, merchant_password, merchant_scope
+      )
+    values (#{id,jdbcType=INTEGER}, #{merchantName,jdbcType=VARCHAR}, #{merchantShopName,jdbcType=VARCHAR}, 
+      #{merchantAccount,jdbcType=VARCHAR}, #{merchantPassword,jdbcType=VARCHAR}, #{merchantScope,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yaosiyuan.entity.MsMerchant">
+    insert into ms_merchant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="merchantShopName != null">
+        merchant_shop_name,
+      </if>
+      <if test="merchantAccount != null">
+        merchant_account,
+      </if>
+      <if test="merchantPassword != null">
+        merchant_password,
+      </if>
+      <if test="merchantScope != null">
+        merchant_scope,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantShopName != null">
+        #{merchantShopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAccount != null">
+        #{merchantAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPassword != null">
+        #{merchantPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantScope != null">
+        #{merchantScope,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yaosiyuan.entity.MsMerchant">
+    update ms_merchant
+    <set>
+      <if test="merchantShopName != null">
+        merchant_shop_name = #{merchantShopName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantAccount != null">
+        merchant_account = #{merchantAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPassword != null">
+        merchant_password = #{merchantPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantScope != null">
+        merchant_scope = #{merchantScope,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and merchant_name = #{merchantName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yaosiyuan.entity.MsMerchant">
+    update ms_merchant
+    set merchant_shop_name = #{merchantShopName,jdbcType=VARCHAR},
+      merchant_account = #{merchantAccount,jdbcType=VARCHAR},
+      merchant_password = #{merchantPassword,jdbcType=VARCHAR},
+      merchant_scope = #{merchantScope,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  	<sql id="consutomsql" >
+		<if test="constomMsmerchant != null">
+			<if test="constomMsmerchant.merchantName!=null and constomMsmerchant.merchantName!=''">
+					and merchant_name = "${constomMsmerchant.merchantName}"
+			</if>
+			<if test="constomMsmerchant.merchantShopName!=null and constomMsmerchant.merchantShopName!='' ">
+					and merchant_shop_name = "${constomMsmerchant.merchantShopName}"
+			</if>
+			<if test="constomMsmerchant.merchantAccount!=null and constomMsmerchant.merchantAccount!='' ">
+					and merchant_account = "${constomMsmerchant.merchantAccount}"
+			</if>
+			<if test="constomMsmerchant.merchantPassword !=null and constomMsmerchant.merchantPassword!='' ">
+					and merchant_password = "${constomMsmerchant.merchantPassword}"
+			</if>
+			<if test="constomMsmerchant.merchantScope!=null and constomMsmerchant.merchantScope!='' ">
+					and merchant_scope = "${constomMsmerchant.merchantScope}"
+			</if>
+		</if>
+	</sql>
+	<select id="queryMsmerchantByVo" parameterType="com.yaosiyuan.vo.MsMerchantVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_merchant
+    <where>
+		<include refid="consutomsql"></include>
+	</where>
+  </select>
+</mapper>

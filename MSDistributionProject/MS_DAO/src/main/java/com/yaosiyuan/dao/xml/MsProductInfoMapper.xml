@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaosiyuan.dao.MsProductInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yaosiyuan.entity.MsProductInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_title" jdbcType="VARCHAR" property="productTitle" />
+    <result column="product_pic" jdbcType="VARCHAR" property="productPic" />
+    <result column="product_og_price" jdbcType="INTEGER" property="productOgPrice" />
+    <result column="miaosha_price" jdbcType="INTEGER" property="miaoshaPrice" />
+    <result column="merchant" jdbcType="INTEGER" property="merchant" />
+    <result column="applay_date" jdbcType="TIMESTAMP" property="applayDate" />
+    <result column="aidot_date" jdbcType="TIMESTAMP" property="aidotDate" />
+    <result column="aidot_status" jdbcType="INTEGER" property="aidotStatus" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="product_count" jdbcType="INTEGER" property="productCount" />
+    <result column="stock_count" jdbcType="INTEGER" property="stockCount" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_id, product_title, product_pic, product_og_price, miaosha_price, merchant, 
+    applay_date, aidot_date, aidot_status, start_time, end_time, product_count, stock_count, 
+    description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ms_product_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ms_product_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="applyMsProduct" parameterType="com.yaosiyuan.entity.MsProductInfo">
+	
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into ms_product_info(product_id,product_title,
+		product_pic,miaosha_price,product_og_price,merchant,
+		applay_date,aidot_status,start_time,end_time,product_count,
+		stock_count,description) 
+		value(#{productId},#{productTitle},#{productPic},
+		#{miaoshaPrice},#{productOgPrice},#{merchant},
+		#{applayDate},#{aidotStatus},#{startTime},#{endTime},
+		#{productCount},#{stockCount},#{description})
+	</insert>
+  <insert id="insert" parameterType="com.yaosiyuan.entity.MsProductInfo">
+    insert into ms_product_info (id, product_id, product_title, 
+      product_pic, product_og_price, miaosha_price, 
+      merchant, applay_date, aidot_date, 
+      aidot_status, start_time, end_time, 
+      product_count, stock_count, description
+      )
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR}, 
+      #{productPic,jdbcType=VARCHAR}, #{productOgPrice,jdbcType=INTEGER}, #{miaoshaPrice,jdbcType=INTEGER}, 
+      #{merchant,jdbcType=INTEGER}, #{applayDate,jdbcType=TIMESTAMP}, #{aidotDate,jdbcType=TIMESTAMP}, 
+      #{aidotStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{productCount,jdbcType=INTEGER}, #{stockCount,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yaosiyuan.entity.MsProductInfo">
+    insert into ms_product_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productTitle != null">
+        product_title,
+      </if>
+      <if test="productPic != null">
+        product_pic,
+      </if>
+      <if test="productOgPrice != null">
+        product_og_price,
+      </if>
+      <if test="miaoshaPrice != null">
+        miaosha_price,
+      </if>
+      <if test="merchant != null">
+        merchant,
+      </if>
+      <if test="applayDate != null">
+        applay_date,
+      </if>
+      <if test="aidotDate != null">
+        aidot_date,
+      </if>
+      <if test="aidotStatus != null">
+        aidot_status,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="productCount != null">
+        product_count,
+      </if>
+      <if test="stockCount != null">
+        stock_count,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productTitle != null">
+        #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productPic != null">
+        #{productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="productOgPrice != null">
+        #{productOgPrice,jdbcType=INTEGER},
+      </if>
+      <if test="miaoshaPrice != null">
+        #{miaoshaPrice,jdbcType=INTEGER},
+      </if>
+      <if test="merchant != null">
+        #{merchant,jdbcType=INTEGER},
+      </if>
+      <if test="applayDate != null">
+        #{applayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aidotDate != null">
+        #{aidotDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aidotStatus != null">
+        #{aidotStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productCount != null">
+        #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="stockCount != null">
+        #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yaosiyuan.entity.MsProductInfo">
+    update ms_product_info
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productTitle != null">
+        product_title = #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productPic != null">
+        product_pic = #{productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="productOgPrice != null">
+        product_og_price = #{productOgPrice,jdbcType=INTEGER},
+      </if>
+      <if test="miaoshaPrice != null">
+        miaosha_price = #{miaoshaPrice,jdbcType=INTEGER},
+      </if>
+      <if test="merchant != null">
+        merchant = #{merchant,jdbcType=INTEGER},
+      </if>
+      <if test="applayDate != null">
+        applay_date = #{applayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aidotDate != null">
+        aidot_date = #{aidotDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aidotStatus != null">
+        aidot_status = #{aidotStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productCount != null">
+        product_count = #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="stockCount != null">
+        stock_count = #{stockCount,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yaosiyuan.entity.MsProductInfo">
+    update ms_product_info
+    set product_id = #{productId,jdbcType=INTEGER},
+      product_title = #{productTitle,jdbcType=VARCHAR},
+      product_pic = #{productPic,jdbcType=VARCHAR},
+      product_og_price = #{productOgPrice,jdbcType=INTEGER},
+      miaosha_price = #{miaoshaPrice,jdbcType=INTEGER},
+      merchant = #{merchant,jdbcType=INTEGER},
+      applay_date = #{applayDate,jdbcType=TIMESTAMP},
+      aidot_date = #{aidotDate,jdbcType=TIMESTAMP},
+      aidot_status = #{aidotStatus,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      product_count = #{productCount,jdbcType=INTEGER},
+      stock_count = #{stockCount,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="consutomsql" >
+		<if test="constomProduct != null">
+			<if test="constomProduct.productId!=null and constomProduct.productId!=''">
+					and product_id = "${constomProduct.productId}"
+			</if>
+			<if test="constomProduct.productTitle!=null and constomProduct.productTitle!='' ">
+					and product_title  like "%${constomProduct.productTitle}%"
+			</if>
+			<if test="constomProduct.startmiaoshaprice!=null and constomProduct.startmiaoshaprice!='' ">
+					and miaosha_price  <![CDATA[ >= ]]>  "${constomProduct.startmiaoshaprice}"
+			</if>
+			<if test="constomProduct.endmiaoshaprice != null and constomProduct.endmiaoshaprice!=''">
+			
+				and miaosha_price <![CDATA[ <= ]]> "${constomProduct.endmiaoshaprice}"
+			</if>
+		
+			<if test="constomProduct.startoriginalprice!=null and constomProduct.startoriginalprice!='' ">
+					and product_og_price  <![CDATA[ >= ]]>  "${constomProduct.startoriginalprice}"
+			</if>
+			<if test="constomProduct.endoriginalprice!=null and constomProduct.endoriginalprice!='' " >
+					and product_og_price  <![CDATA[ <= ]]>  "${constomProduct.endoriginalprice}"
+			</if>
+			<if test="constomProduct.endstockcount!=null and constomProduct.endstockcount!='' ">
+					and stock_count  <![CDATA[ <= ]]>  "${constomProduct.endstockcount}"
+			</if>
+			<if test="constomProduct.description!=null and constomProduct.description!=''">
+					and description like "%${constomProduct.description}%"
+			</if>
+			<if test="constomProduct.endapplydate!=null and constomProduct.endapplydate!='' ">
+					and applay_date  <![CDATA[ <= ]]> STR_TO_DATE(#{constomProduct.endapplydate},'%Y-%m-%d %H:%i:%S')
+			</if>
+
+			<if test="constomProduct.endauditdate!=null and constomProduct.endauditdate!='' ">
+					and applay_date  <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endauditdate},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.startapplydate!=null and constomProduct.startapplydate!='' ">
+					and applay_date  <![CDATA[ >= ]]>  STR_TO_DATE(#{constomUser.startapplydate},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.startauditdate!=null and constomProduct.startauditdate!='' ">
+					and aidot_date  <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startauditdate},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.aidotStatus!=null and constomProduct.aidotStatus!='' ">
+					and aidot_status = "${constomProduct.aidotStatus}"
+			</if>
+			<if test="constomProduct.startstarttime!=null and constomProduct.startstarttime!='' ">
+					and start_time  <![CDATA[ >= ]]>  STR_TO_DATE(#{constomProduct.startstarttime},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.endstarttime!=null and constomProduct.endstarttime!='' ">
+					and start_time  <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endstarttime},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.startendtime!=null and constomProduct.startendtime!='' ">
+					and end_time  <![CDATA[ >= ]]> STR_TO_DATE(#{constomProduct.startendtime},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.endendtime!=null and constomProduct.endendtime!='' ">
+					and end_time  <![CDATA[ <= ]]>  STR_TO_DATE(#{constomProduct.endendtime},'%Y-%m-%d %H:%i:%S')
+			</if>
+			<if test="constomProduct.startproductcount!=null and constomProduct.startproductcount!='' ">
+					and product_count  <![CDATA[ >= ]]>  "${constomProduct.startproductcount}"
+			</if>
+			<if test="constomProduct.endproductcount!=null and constomProduct.endproductcount!='' ">
+					and product_count  <![CDATA[ <= ]]>  "${constomProduct.endproductcount}"
+			</if>
+			<if test="constomProduct.startstockcount!=null and constomProduct.startstockcount!='' ">
+					and stock_count  <![CDATA[ >= ]]>  "${constomProduct.startstockcount}"
+			</if>
+			<if test="constomProduct.endstockcount!=null and constomProduct.endstockcount!='' ">
+					and stock_count  <![CDATA[ <= ]]>  "${constomProduct.endstockcount}"
+			</if>
+		</if>
+	</sql>
+	
+	<select id="listMsProduct" parameterType="com.yaosiyuan.vo.MsProductVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+	from ms_product_info
+    	<where>
+			<include refid="consutomsql"></include>
+		</where>
+	</select>
+	
+	<update id="updateProductState" parameterType="com.yaosiyuan.vo.MsProductVo">
+		update ms_product_info set aidot_status=#{constomProduct.aidotStatus} where id=#{constomProduct.id}
+	</update>
+ 
+</mapper>

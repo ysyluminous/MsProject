@@ -12,24 +12,21 @@
       <version>4.10</version>  
       <scope>test</scope>  
     </dependency>  
-    
        <!-- 鏁版嵁婧?-->  
     <!-- <dependency>  
         <groupId>commons-dbcp</groupId>  
         <artifactId>commons-dbcp</artifactId>  
         <version>1.4</version>  
     </dependency>   -->
-    
-    
     <dependency>  
-       <groupId>com.yaosiyuan.common</groupId>  
-       <artifactId>MS_Common</artifactId>  
+       <groupId>com.yaosiyuan</groupId>  
+       <artifactId>MS_COMMON</artifactId>  
        <version>0.0.1-SNAPSHOT</version>  
     </dependency>
     
      <dependency>  
-       <groupId>com.yaosiyuan.dao</groupId>  
-       <artifactId>MS_Dao</artifactId>  
+       <groupId>com.yaosiyuan</groupId>  
+       <artifactId>MS_DAO</artifactId>  
        <version>0.0.1-SNAPSHOT</version>  
     </dependency>
     
