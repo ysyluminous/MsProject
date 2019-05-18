@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yaosiyuan</groupId>
+  <artifactId>MS_WEB</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+  <dependencies>
+  	<dependency>  
+      <groupId>junit</groupId>  
+      <artifactId>junit</artifactId>  
+      <version>4.10</version>  
+      <scope>test</scope>  
+    </dependency>  
+       <!-- 鏁版嵁婧?-->  
+    <!-- <dependency>  
+        <groupId>commons-dbcp</groupId>  
+        <artifactId>commons-dbcp</artifactId>  
+        <version>1.4</version>  
+    </dependency>   -->
+    <dependency>  
+       <groupId>com.yaosiyuan</groupId>  
+       <artifactId>MS_COMMON</artifactId>  
+       <version>0.0.1-SNAPSHOT</version>  
+    </dependency>
+    
+     <dependency>  
+       <groupId>com.yaosiyuan</groupId>  
+       <artifactId>MS_DAO</artifactId>  
+       <version>0.0.1-SNAPSHOT</version>  
+    </dependency>
+    
+   	<dependency>  
+      <groupId>junit</groupId>  
+      <artifactId>junit</artifactId>  
+      <version>4.10</version>  
+      <scope>test</scope>  
+    </dependency> 
+    <dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-webmvc</artifactId>
+  		<version>4.2.0.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>servlet-api</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  	<dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    
+    <dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.8.4</version>			
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.1</version>
+		</dependency>
+		<dependency>  
+        <groupId>org.springframework</groupId>  
+        <artifactId>spring-context</artifactId>  
+        <version>4.2.0.RELEASE</version>  
+    </dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.11.0.GA</version>
+		</dependency>
+<!-- 日志处理  -->
+           <!-- slf4j日志包-->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.21</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.21</version> 
+           </dependency>
+          <!-- 引入log4j日志包-->
+         <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId> 
+         <version>1.2.16</version>
+         </dependency>
+         
+  </dependencies>
+ 
+
+</project>

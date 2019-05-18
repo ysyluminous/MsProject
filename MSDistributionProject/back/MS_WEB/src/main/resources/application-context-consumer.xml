@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+     
+     <dubbo:application name="dubbo-service-sayHello"/>
+   <!-- <dubbo:registry address="zookeeper://47.94.238.23:2181" />  -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+    <dubbo:reference id="msMerchantServiceImpl" interface="com.yaosiyuan.service.MsMerchantService"/>
+     <dubbo:reference id="msOrderServiceImpl" interface="com.yaosiyuan.service.MsOrderService"/>
+      <dubbo:reference id="msProductDetailService" interface="com.yaosiyuan.service.MsMerchantService"/>
+       <dubbo:reference id="msProductInfoServiceImpl" interface="com.yaosiyuan.service.MsMerchantService"/>
+        <dubbo:reference id="msUserServiceImpl" interface="com.yaosiyuan.service.MsMerchantService"/>
+         <dubbo:reference id="wxPayImpa" interface="com.yaosiyuan.service.pay.WxPay"/>
+      <dubbo:reference id="aliPayImpa" interface="com.yaosiyuan.service.pay.AliPay"/>
+      <dubbo:reference id="ylPayImpa" interface="com.yaosiyuan.service.pay.YlPay"/>
+</beans>

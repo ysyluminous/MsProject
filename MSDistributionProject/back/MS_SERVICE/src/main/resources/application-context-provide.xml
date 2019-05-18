@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://code.alibabatech.com/schema/dubbo 
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+  
+    
+    
+    <dubbo:protocol name="dubbo" port="20880"></dubbo:protocol> 
+	<dubbo:application name="MS_SERVICE"/>  
+<!-- 	<dubbo:registry address="zookeeper://47.94.238.23:2181" /> -->
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
+	 
+	<dubbo:service interface="com.yaosiyuan.service.MsMerchantService" ref="msMerchantServiceImpl"/>
+    <bean id="msMerchantServiceImpl" class="com.yaosiyuan.service.MsMerchantServiceImpl"/>
+    
+  	<dubbo:service interface="com.yaosiyuan.service.MsOrderService" ref="msOrderServiceImpl"/>
+    <bean id="msOrderServiceImpl" class="com.yaosiyuan.service.MsOrderServiceImpl"/>
+    
+    <dubbo:service interface="com.yaosiyuan.service.MsProductDetailService" ref="msProductDetailService"/>
+    <bean id="msProductDetailService" class="com.yaosiyuan.service.MsProductDetailServiceImpl"/>
+    
+    <dubbo:service interface="com.yaosiyuan.service.MsProductInfoService" ref="msProductInfoServiceImpl"/>
+    <bean id="msProductInfoServiceImpl" class="com.yaosiyuan.service.MsProductInfoServiceImpl"/>
+
+    <dubbo:service interface="com.yaosiyuan.service.MsUserService" ref="msUserServiceImpl"/>
+    <bean id="msUserServiceImpl" class="com.yaosiyuan.service.MsUserServiceImpl"/>
+   
+    
+    <dubbo:service interface="com.yaosiyuan.service.pay.WxPay" ref="wxPayImpa"/>
+    <bean id="wxPayImpa" class="com.yaosiyuan.service.pay.WxPayImpl"/> 
+    
+      <dubbo:service interface="com.yaosiyuan.service.pay.AliPay" ref="aliPayImpa"/>
+    <bean id="aliPayImpa" class="com.yaosiyuan.service.pay.AliPayImpl"/> 
+    
+      <dubbo:service interface="com.yaosiyuan.service.pay.YlPay" ref="ylPayImpa"/>
+    <bean id="ylPayImpa" class="com.yaosiyuan.service.pay.YlPayImpl"/> 
+   
+</beans>
