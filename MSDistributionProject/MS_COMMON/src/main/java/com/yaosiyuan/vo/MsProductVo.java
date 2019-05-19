@@ -8,6 +8,8 @@
 */
 package com.yaosiyuan.vo;
 
+import java.io.Serializable;
+
 /**
  * @description: 功能描述 ()
  * @copyright: Copyright (c) 2019
@@ -16,7 +18,7 @@ package com.yaosiyuan.vo;
  * @version: 2.0
  * @date: 2019 2019年5月5日 上午9:00:26
  */
-public class MsProductVo extends ConstomProduct {
+public class MsProductVo implements Serializable {
 	private ConstomProduct constomProduct;
 
 	/**

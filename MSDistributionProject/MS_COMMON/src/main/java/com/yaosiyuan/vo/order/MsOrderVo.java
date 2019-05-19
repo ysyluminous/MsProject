@@ -8,6 +8,8 @@
 */
 package com.yaosiyuan.vo.order;
 
+import java.io.Serializable;
+
 /**
  * @description: 功能描述 ()
  * @copyright: Copyright (c) 2019
@@ -16,7 +18,7 @@ package com.yaosiyuan.vo.order;
  * @version: 2.0
  * @date: 2019 2019年5月3日 下午8:30:20
  */
-public class MsOrderVo {
+public class MsOrderVo implements Serializable {
 	private ConstomOrder constomOrder;
 
 	/**

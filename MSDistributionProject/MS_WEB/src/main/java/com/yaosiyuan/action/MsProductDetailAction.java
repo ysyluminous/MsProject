@@ -15,9 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.yaosiyuan.entity.MsProductDetail;
 import com.yaosiyuan.service.MsProductDetailService;
+import com.yaosiyuan.service.cache.MsProductDetailCacheService;
 
 /**
  * @description: 功能描述 ()
@@ -32,6 +32,9 @@ import com.yaosiyuan.service.MsProductDetailService;
 public class MsProductDetailAction {
 	@Autowired
 	private MsProductDetailService msProductDetailService;
+
+	@Autowired
+	MsProductDetailCacheService msProductInfoCacheServiceImpl;
 
 	@RequestMapping(value = "toInsertMsProductDetail")
 	public String toinsertMsproductdetail(HttpServletRequest req, int productId, int merchant) {

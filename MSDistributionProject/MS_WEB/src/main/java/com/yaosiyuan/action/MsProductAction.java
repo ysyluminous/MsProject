@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yaosiyuan.entity.MsProductInfo;
 import com.yaosiyuan.service.MsProductInfoService;
+import com.yaosiyuan.service.cache.MsProductInfoCacheService;
 import com.yaosiyuan.vo.MsProductVo;
 
 /**
@@ -38,6 +39,9 @@ public class MsProductAction {
 
 	@Autowired
 	MsProductInfoService msProductInfoService;
+
+	@Autowired
+	MsProductInfoCacheService msProductInfoCacheService;
 
 	@RequestMapping(value = "toApplyMsProduct")
 	public String toApplyMsProduct() {
