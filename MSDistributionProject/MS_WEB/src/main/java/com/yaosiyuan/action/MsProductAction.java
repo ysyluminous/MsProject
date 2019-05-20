@@ -65,7 +65,12 @@ public class MsProductAction {
 
 	@RequestMapping(value = "queryMsProductByid")
 	public String queryMsProductByid(HttpServletRequest req, int id) {
-		MsProductInfo msProductInfo = msProductInfoService.queryProductById(id);
+		// 没有使用缓存
+		// MsProductInfo msProductInfo
+		// =msProductInfoService.queryProductById(id);
+
+		// 使用ehcache缓存
+		MsProductInfo msProductInfo = msProductInfoCacheService.queryProductById(id);
 		req.setAttribute("msProductInfo", msProductInfo);
 		return "msProductInfo/view";
 	}

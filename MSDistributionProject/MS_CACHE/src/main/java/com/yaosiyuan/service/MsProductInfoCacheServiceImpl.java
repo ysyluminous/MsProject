@@ -8,6 +8,8 @@
 */
 package com.yaosiyuan.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.yaosiyuan.entity.MsProductInfo;
@@ -24,8 +26,13 @@ import com.yaosiyuan.service.cache.MsProductInfoCacheService;
 @Service
 public class MsProductInfoCacheServiceImpl implements MsProductInfoCacheService {
 
+	@Autowired
+	MsProductInfoService msProductInfoService;
+
+	@Cacheable(value = "MS_Cache", key = "'user:'+#id")
 	public MsProductInfo queryProductById(int id) {
-		return null;
+		System.out.println("看到这条消息证明去查询数据库");
+		return msProductInfoService.queryProductById(id);
 	}
 
 }

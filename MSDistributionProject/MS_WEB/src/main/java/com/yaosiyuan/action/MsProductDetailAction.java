@@ -34,7 +34,7 @@ public class MsProductDetailAction {
 	private MsProductDetailService msProductDetailService;
 
 	@Autowired
-	MsProductDetailCacheService msProductInfoCacheServiceImpl;
+	MsProductDetailCacheService msProductDetailCacheService;
 
 	@RequestMapping(value = "toInsertMsProductDetail")
 	public String toinsertMsproductdetail(HttpServletRequest req, int productId, int merchant) {
@@ -60,7 +60,11 @@ public class MsProductDetailAction {
 
 	@RequestMapping(value = "queryMsProductdetailByid")
 	public String queryMsproductdetailByid(HttpServletRequest req, int productId) {
-		MsProductDetail msProductDetail = msProductDetailService.selectByPrimaryKey(productId);
+		// MsProductDetail msProductDetail =
+		// msProductDetailService.selectByPrimaryKey(productId);
+
+		// 使用缓存
+		MsProductDetail msProductDetail = msProductDetailCacheService.selectByPrimaryKey(productId);
 		req.setAttribute("msProductDetail", msProductDetail);
 		return "msProductDetail/msproductdetailview";
 	}
