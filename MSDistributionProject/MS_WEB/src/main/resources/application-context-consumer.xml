@@ -12,6 +12,16 @@
   <dubbo:reference id="wxPay" interface="com.yaosiyuan.service.pay.WxPay"/>  
   <dubbo:reference id="aliPay" interface="com.yaosiyuan.service.pay.AliPay"/>  
   <dubbo:reference id="ylPay" interface="com.yaosiyuan.service.pay.YlPay"/>  
-  <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>  
-  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/> 
+  
+<!--   <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>  
+  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/>  -->
+  
+  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.redis.MsProductDetailRedisService"/>  
+  <dubbo:reference id="msProductInfoRedisServiceImpl" interface="com.yaosiyuan.service.redis.MsProductInfoRedisService"/>
+  
+  
+  
+  
+  
+  
 </beans>

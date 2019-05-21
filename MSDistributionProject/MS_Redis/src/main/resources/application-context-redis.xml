@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://code.alibabatech.com/schema/dubbo 
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+       
+  <dubbo:protocol name="dubbo" port="20882"></dubbo:protocol> 
+   <dubbo:application name="MS_Redis"/>  
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+    
+    
+    <dubbo:service interface="com.yaosiyuan.service.redis.MsProductDetailRedisService" ref="msProductDetailRedisServiceImpl"/>
+    <bean id="msProductDetailRedisServiceImpl" class="com.yaosiyuan.redis.MsProductDetailRedisServiceImpl"/>
+    <dubbo:service interface="com.yaosiyuan.service.redis.MsProductInfoRedisService" ref="msProductInfoRedisServiceImpl"/>
+    <bean id="msProductInfoRedisServiceImpl" class="com.yaosiyuan.redis.MsProductInfoRedisServiceImpl"/>
+    
+    <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>  
+  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/> 
+    
+</beans>

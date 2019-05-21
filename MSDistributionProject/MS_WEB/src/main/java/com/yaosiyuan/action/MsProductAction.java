@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yaosiyuan.entity.MsProductInfo;
 import com.yaosiyuan.service.MsProductInfoService;
-import com.yaosiyuan.service.cache.MsProductInfoCacheService;
+import com.yaosiyuan.service.redis.MsProductInfoRedisService;
 import com.yaosiyuan.vo.MsProductVo;
 
 /**
@@ -41,7 +41,7 @@ public class MsProductAction {
 	MsProductInfoService msProductInfoService;
 
 	@Autowired
-	MsProductInfoCacheService msProductInfoCacheService;
+	MsProductInfoRedisService msProductInfoRedisService;
 
 	@RequestMapping(value = "toApplyMsProduct")
 	public String toApplyMsProduct() {
@@ -70,7 +70,7 @@ public class MsProductAction {
 		// =msProductInfoService.queryProductById(id);
 
 		// 使用ehcache缓存
-		MsProductInfo msProductInfo = msProductInfoCacheService.queryProductById(id);
+		MsProductInfo msProductInfo = msProductInfoRedisService.queryProductById(id);
 		req.setAttribute("msProductInfo", msProductInfo);
 		return "msProductInfo/view";
 	}

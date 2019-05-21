@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yaosiyuan.entity.MsProductDetail;
 import com.yaosiyuan.service.MsProductDetailService;
-import com.yaosiyuan.service.cache.MsProductDetailCacheService;
+import com.yaosiyuan.service.redis.MsProductDetailRedisService;
 
 /**
  * @description: 功能描述 ()
@@ -34,7 +34,7 @@ public class MsProductDetailAction {
 	private MsProductDetailService msProductDetailService;
 
 	@Autowired
-	MsProductDetailCacheService msProductDetailCacheService;
+	MsProductDetailRedisService msProductDetailRedisService;
 
 	@RequestMapping(value = "toInsertMsProductDetail")
 	public String toinsertMsproductdetail(HttpServletRequest req, int productId, int merchant) {
@@ -64,7 +64,7 @@ public class MsProductDetailAction {
 		// msProductDetailService.selectByPrimaryKey(productId);
 
 		// 使用缓存
-		MsProductDetail msProductDetail = msProductDetailCacheService.selectByPrimaryKey(productId);
+		MsProductDetail msProductDetail = msProductDetailRedisService.selectByPrimaryKey(productId);
 		req.setAttribute("msProductDetail", msProductDetail);
 		return "msProductDetail/msproductdetailview";
 	}
