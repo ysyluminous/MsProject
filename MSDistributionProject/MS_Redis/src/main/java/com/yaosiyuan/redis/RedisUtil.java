@@ -1,4 +1,5 @@
 package com.yaosiyuan.redis;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -638,6 +639,15 @@ public class RedisUtil {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	public long getKeyListSize(String key) {
+		return redisTemplate.opsForList().size(key);
+	}
+
+	public long pushList(String key, String value) {
+		// 返回插入list的总条数
+		return redisTemplate.opsForList().leftPush(key, value);
 	}
 
 }

@@ -8,6 +8,16 @@
 */
 package com.yaosiyuan.action;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.yaosiyuan.entity.MsOrder;
 import com.yaosiyuan.entity.MsProductInfo;
 import com.yaosiyuan.entity.OnLine;
@@ -16,16 +26,10 @@ import com.yaosiyuan.service.MsProductInfoService;
 import com.yaosiyuan.service.pay.AliPay;
 import com.yaosiyuan.service.pay.WxPay;
 import com.yaosiyuan.service.pay.YlPay;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import com.yaosiyuan.service.redis.MsProductDetailRedisService;
+import com.yaosiyuan.service.redis.MsProductInfoRedisService;
+import com.yaosiyuan.service.redis.OrderRedisService;
+import com.yaosiyuan.vo.order.ConstomOrder;
 
 /**
  * @description: 功能描述 ()
@@ -53,6 +57,15 @@ public class OrderAction {
 
 	@Autowired
 	YlPay ylPay;
+
+	@Autowired
+	MsProductInfoRedisService msProductInfoRedisService;
+
+	@Autowired
+	MsProductDetailRedisService msProductDetailRedisService;
+
+	@Autowired
+	OrderRedisService orderRedisService;
 
 	/**
 	 * 
@@ -235,15 +248,28 @@ public class OrderAction {
 	}
 
 	@RequestMapping(value = "payOrder", method = RequestMethod.POST)
-	public String payOrder(HttpServletRequest request, MsOrder msOrder) {
-		Date now = new Date();
-		msOrder.setCreateTime(now);
-		int payStatus = 1;
-		msOrder.setPayStatus(payStatus);
-		String tradeId = UUID.randomUUID().toString();
-		msOrder.setTradeId(tradeId);
+	public String payOrder(HttpServletRequest request, ConstomOrder msOrder) {
+		// Date now = new Date();
+		// msOrder.setCreateTime(now);
+		// int payStatus = 1;
+		// msOrder.setPayStatus(payStatus);
+		// String tradeId = UUID.randomUUID().toString();
+		// msOrder.setTradeId(tradeId);
+		//
+		// msOrderService.insert(msOrder);
 
-		msOrderService.insert(msOrder);
+		HttpSession session = request.getSession();
+		OnLine onLine = (OnLine) session.getAttribute("onLine");
+		if (onLine == null) {
+			return "redirect:/userRegAndLogAction/toLogin";
+		}
+		boolean isSuccess = orderRedisService.secKill(msOrder.getUserId(), msOrder.getProductId(), msOrder);
+
+		if (isSuccess) {
+			System.out.println("秒杀成功");
+		} else {
+			System.out.println("秒杀失败");
+		}
 		return "redirect:/";
 
 	}
@@ -255,8 +281,12 @@ public class OrderAction {
 		if (onLine == null) {
 			return "redirect:/userRegAndLogAction/toLogin";
 		}
+		// 数据库查询商品详情
+		// MsProductInfo msProductInfo =
+		// msProductInfoRedisService.queryProductById(id);
 
-		MsProductInfo msProductInfo = msProductInfoService.queryProductById(id);
+		// 缓存查询商品详情
+		MsProductInfo msProductInfo = msProductInfoRedisService.queryProductById(id);
 		request.setAttribute("msProductInfo", msProductInfo);
 		request.setAttribute("num", num);
 

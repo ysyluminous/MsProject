@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <head>
  
-  <title>AdminLTE 2 | Starter</title>
+  <title>商品详情</title>
  <%@include file="../include/css.jsp"%>
 </head>
 <!--
@@ -45,8 +45,8 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        昭阳商城
+        <small>商品详情</small> <span id = "remainNoties"></span>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -61,7 +61,8 @@ desired effect
         | Your Page Content Here |
         -------------------------->
 		<!-- 秒杀商品  -->
-<form action="${pageContext.request.contextPath }/orderAction/toPayOrder">
+<form action="#"  id= "sellForm">
+<!--${pageContext.request.contextPath }/orderAction/toPayOrder  -->
 		
 		<input type="hidden" name="id" value="${msproduct.id}">
 <div class="row">
@@ -87,8 +88,8 @@ desired effect
 							<th>秒杀开始时间</th>
 							<th>秒杀结束时间</th>
 							<th>秒杀商品数</th>
-							<th>秒杀数量</th>
 							<th>库存</th>
+						
 							
                 	</tr>
              
@@ -97,9 +98,17 @@ desired effect
 						<th>${msproduct.productPic }</th>
 						<th>${msproduct.miaoshaPrice }</th>
 						<th>${msproduct.productOgPrice }</th>
-						<th>${msproduct.startTime }</th>
-						<th>${msproduct.endTime }</th>
-						<th>？</th>
+						<th>
+							<span id="startTime">
+								<fmt:formatDate value="${msproduct.startTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+							</span>
+						</th>
+						<th>
+							<span id="endTime">
+								<fmt:formatDate value="${msproduct.endTime }" 
+							pattern="yyyy-MM-dd HH:mm:ss"/>
+							</span>
+						</th>
 						<th>${msproduct.productCount }</th>
 						<th>${msproduct.stockCount }</th>
                 </tr>
@@ -148,10 +157,10 @@ desired effect
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <div class="input-group input-group-sm" style="width: 250px;">
-                  <input type="text" name="num" class="form-control pull-right" placeholder="输入购买数量">
+                  <input type="text" name="num" class="form-control pull-right" value="1" placeholder="输入购买数量">
 
                   <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="">立即购买</i></button>
+                    <button type="submit" id="sellBun"  onclick="submit(this)" class="btn btn-default"><i class="">立即购买</i></button>
                   </div>
                 </div>
             </div>
@@ -159,8 +168,8 @@ desired effect
           <!-- /.box -->
         </div>
       </div>
- <input type="button" value="立即购买" onclick="submit(this)"/>
-</form>
+<!--  <input type="button" id="sellBun" value="立即购买" onclick="submit(this)"/>
+ --></form>
 	
     </section>
     <!-- /.content -->
@@ -175,11 +184,15 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
  <%@include file="../include/js.jsp"%>
+<%-- <script type="text/javascript"  src = "${pageContext.request.contextPath }/static/dist/js/ms/remain.js"></script> --%>
 <script type="text/javascript">
 function submit(obj){
 	obj.parent.sumbit();
 }
-</script>
+document.write( "<script type='text/javascript' src='/static/dist/js/ms/remain.js?radom=" + Math.random() + " '></s" + "cript>" )
+
+
+</script> 
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

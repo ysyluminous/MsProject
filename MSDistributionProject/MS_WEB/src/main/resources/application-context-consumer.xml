@@ -16,6 +16,8 @@
 <!--   <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>  
   <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/>  -->
   
+  
+  <dubbo:reference id="orderRedisServiceImpl" interface="com.yaosiyuan.service.redis.OrderRedisService"/>  
   <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.redis.MsProductDetailRedisService"/>  
   <dubbo:reference id="msProductInfoRedisServiceImpl" interface="com.yaosiyuan.service.redis.MsProductInfoRedisService"/>
   

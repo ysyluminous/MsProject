@@ -20,4 +20,23 @@ import com.yaosiyuan.entity.MsOrder;
  */
 public class ConstomOrder extends MsOrder {
 
+	private int stockCount;
+
+	/**
+	 * stockCount
+	 * 
+	 * @return the stockCount
+	 */
+	public int getStockCount() {
+		return stockCount;
+	}
+
+	/**
+	 * @param stockCount
+	 *            the stockCount to set
+	 */
+	public void setStockCount(int stockCount) {
+		this.stockCount = stockCount;
+	}
+
 }

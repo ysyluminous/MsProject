@@ -75,6 +75,7 @@ desired effect
 				<input type="hidden" name="merchantId" value="${msProductInfo.merchant}">
 				<input type="hidden" name="payAmount" value="${payAmount}">
 				<input type="hidden" name="num" value="${num}">
+				<input type="hidden" name="stockCount" value="${msProductInfo.stockCount}">
 				
               
              	 <div class="form-group">

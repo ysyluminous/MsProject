@@ -8,23 +8,27 @@
 */
 package com.yaosiyuan.action;
 
-import com.yaosiyuan.entity.MsProductDetail;
-import com.yaosiyuan.entity.MsProductInfo;
-import com.yaosiyuan.service.MsOrderService;
-import com.yaosiyuan.service.MsProductDetailService;
-import com.yaosiyuan.service.MsProductInfoService;
-import com.yaosiyuan.vo.ConstomProduct;
-import com.yaosiyuan.vo.MsProductVo;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import com.yaosiyuan.entity.MsProductDetail;
+import com.yaosiyuan.entity.MsProductInfo;
+import com.yaosiyuan.service.MsOrderService;
+import com.yaosiyuan.service.MsProductDetailService;
+import com.yaosiyuan.service.MsProductInfoService;
+import com.yaosiyuan.service.redis.MsProductDetailRedisService;
+import com.yaosiyuan.service.redis.MsProductInfoRedisService;
+import com.yaosiyuan.vo.ConstomProduct;
+import com.yaosiyuan.vo.MsProductVo;
 
 /**
  * @description: 功能描述 ()
@@ -38,13 +42,19 @@ import java.util.List;
 public class IndexAction {
 
 	@Autowired(required = false)
-	 MsProductInfoService msProductInfoService;
+	MsProductInfoService msProductInfoService;
 
 	@Autowired(required = false)
-	 MsProductDetailService msProductDetailService;
+	MsProductDetailService msProductDetailService;
 
 	@Autowired(required = false)
-	 MsOrderService msOrderService;
+	MsOrderService msOrderService;
+
+	@Autowired
+	MsProductInfoRedisService msProductInfoRedisService;
+
+	@Autowired
+	MsProductDetailRedisService msProductDetailRedisService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(HttpServletRequest request) {
@@ -84,8 +94,8 @@ public class IndexAction {
 
 	@RequestMapping(value = "/viewProductDetail", method = RequestMethod.GET)
 	public String viewProductDetail(HttpServletRequest request, int id) {
-		MsProductInfo queryProductById = msProductInfoService.queryProductById(id);
-		MsProductDetail selectProductDetailByPrimaryKey = msProductDetailService.selectByPrimaryKey(id);
+		MsProductInfo queryProductById = msProductInfoRedisService.queryProductById(id);
+		MsProductDetail selectProductDetailByPrimaryKey = msProductDetailRedisService.selectByPrimaryKey(id);
 		request.setAttribute("msproduct", queryProductById);
 		request.setAttribute("msproductDetail", selectProductDetailByPrimaryKey);
 		return "/order/sellDetail";
