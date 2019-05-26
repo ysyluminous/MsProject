@@ -25,9 +25,9 @@
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />    
         <!--逐出连接的最小空闲时间 默认1800000毫秒(30分钟)-->  
         <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}" />   
-        <!--每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3-->  
+        <!--每次逐出检查时 逐出的最大数目 如果为负数就是 : log4j.properties/abs(n), 默认3-->
         <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}" />   
-        <!--逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1-->  
+        <!--逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-log4j.properties-->
         <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}" />   
         <!--是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个-->    
         <property name="testOnBorrow" value="${redis.testOnBorrow}" />    
@@ -50,7 +50,9 @@
         <property name="timeout" value="${redis.timeout}"></property>   
     </bean>
     <!--redis操作模版,使用该对象可以操作redis  -->  
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >    
+    <!-- <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" > -->    
+    <!-- redis模糊匹配 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" > 
         <property name="connectionFactory" ref="jedisConnectionFactory" />    
         <!--如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！！  -->    
         <property name="keySerializer" >    

@@ -8,15 +8,15 @@
 */
 package com.yaosiyuan.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.yaosiyuan.dao.MsOrderMapper;
 import com.yaosiyuan.entity.MsOrder;
 import com.yaosiyuan.vo.order.ConstomOrder;
 import com.yaosiyuan.vo.order.MsOrderVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @description: 功能描述 ()
@@ -31,15 +31,18 @@ public class MsOrderServiceImpl implements MsOrderService {
 	@Autowired
 	MsOrderMapper msOrderMapper;
 
+	@Override
 	public int insert(MsOrder record) {
 		return msOrderMapper.insert(record);
 	}
 
+	@Override
 	public List<MsOrder> queryOrderByUserId(Integer userId) {
 		return msOrderMapper.queryOrderByUserId(userId);
 
 	}
 
+	@Override
 	public void updateOrderStatusById(Integer payStatus, Integer id, Integer payType) {
 		MsOrderVo msOrderVo = new MsOrderVo();
 		ConstomOrder constomOrder = new ConstomOrder();
@@ -51,9 +54,36 @@ public class MsOrderServiceImpl implements MsOrderService {
 
 	}
 
+	@Override
 	public List<MsOrder> queryOrderListByMerId(Integer merchantId) {
 		return msOrderMapper.queryOrderListByMerId(merchantId);
 
 	}
+
+
+
+
+	@Override
+	public void updateOrderStatusByTradeId(Integer payStatus, String tradeId, Integer payType, Date payTime) {
+		MsOrderVo msOrderVo = new MsOrderVo();
+		ConstomOrder constomOrder = new ConstomOrder();
+		constomOrder.setPayStatus(payStatus);
+		constomOrder.setTradeId(tradeId);
+		constomOrder.setPayType(payType);
+		constomOrder.setPayTime(payTime);
+		msOrderVo.setConstomOrder(constomOrder);
+		msOrderMapper.updateOrderStatusByTradeId(msOrderVo);
+
+	}
+
+	@Override
+	public void updateOrderByTradeId(Integer payStatus, String tradeId) {
+		MsOrder msOrder = new MsOrder();
+		msOrder.setPayStatus(payStatus);
+		msOrder.setTradeId(tradeId);
+		msOrderMapper.updateOrderByTradeId(msOrder);
+
+	}
+
 
 }

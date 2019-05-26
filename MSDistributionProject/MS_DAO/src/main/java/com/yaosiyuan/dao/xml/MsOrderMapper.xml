@@ -92,7 +92,34 @@
     </set>
     where id = #{constomOrder.id,jdbcType=INTEGER}
   </update>
-  
+
+
+  <update id="updateOrderStatusByTradeId" parameterType="com.yaosiyuan.entity.MsOrder">
+    update ms_order
+    <set>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=INTEGER},
+      </if>
+
+    </set>
+    where trade_id = #{tradeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateOrderByTradeId" parameterType="com.yaosiyuan.vo.order.MsOrderVo">
+    update ms_order
+    <set>
+      <if test="constomOrder.payStatus != null">
+        pay_status = #{constomOrder.payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="constomOrder.payType != null">
+        pay_type = #{constomOrder.payType,jdbcType=INTEGER},
+      </if>
+      <if test="constomOrder.payTime != null">
+        pay_time = #{constomOrder.payTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where trade_id = #{constomOrder.tradeId,jdbcType=INTEGER}
+  </update>
   <select id="queryOrderListByMerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

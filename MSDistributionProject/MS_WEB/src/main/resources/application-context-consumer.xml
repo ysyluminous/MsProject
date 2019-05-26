@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xsi:schemaLocation="http://www.springframework.org/schema/beans         http://www.springframework.org/schema/beans/spring-beans.xsd         http://code.alibabatech.com/schema/dubbo         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">  
-  <dubbo:application name="MS_WEB"/>  
-  <!-- <dubbo:registry address="zookeeper://47.94.238.23:2181" />  -->  
-  <dubbo:registry address="zookeeper://127.0.0.1:2181"/>  
-  <dubbo:reference id="msMerchantService" interface="com.yaosiyuan.service.MsMerchantService"/>  
-  <dubbo:reference id="msOrderService" interface="com.yaosiyuan.service.MsOrderService"/>  
-  <dubbo:reference id="msProductDetailService" interface="com.yaosiyuan.service.MsProductDetailService"/>  
-  <dubbo:reference id="msProductInfoService" interface="com.yaosiyuan.service.MsProductInfoService"/>  
-  <dubbo:reference id="msUserService" interface="com.yaosiyuan.service.MsUserService"/>  
-  <dubbo:reference id="wxPay" interface="com.yaosiyuan.service.pay.WxPay"/>  
-  <dubbo:reference id="aliPay" interface="com.yaosiyuan.service.pay.AliPay"/>  
-  <dubbo:reference id="ylPay" interface="com.yaosiyuan.service.pay.YlPay"/>  
-  
-<!--   <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>  
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xsi:schemaLocation="http://www.springframework.org/schema/beans         http://www.springframework.org/schema/beans/spring-beans.xsd         http://code.alibabatech.com/schema/dubbo         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+  <dubbo:application name="MS_WEB"/>
+  <!-- <dubbo:registry address="zookeeper://47.94.238.23:2181" />  -->
+  <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+  <dubbo:reference id="msMerchantService" interface="com.yaosiyuan.service.MsMerchantService"/>
+  <dubbo:reference id="msOrderService" interface="com.yaosiyuan.service.MsOrderService"/>
+  <dubbo:reference id="msProductDetailService" interface="com.yaosiyuan.service.MsProductDetailService"/>
+  <dubbo:reference id="msProductInfoService" interface="com.yaosiyuan.service.MsProductInfoService"/>
+  <dubbo:reference id="msUserService" interface="com.yaosiyuan.service.MsUserService"/>
+  <dubbo:reference id="wxPay" interface="com.yaosiyuan.service.pay.WxPay"/>
+  <dubbo:reference id="aliPay" interface="com.yaosiyuan.service.pay.AliPay"/>
+  <dubbo:reference id="ylPay" interface="com.yaosiyuan.service.pay.YlPay"/>
+  <!--   <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>
   <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/>  -->
-  
-  
-  <dubbo:reference id="orderRedisServiceImpl" interface="com.yaosiyuan.service.redis.OrderRedisService"/>  
-  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.redis.MsProductDetailRedisService"/>  
-  <dubbo:reference id="msProductInfoRedisServiceImpl" interface="com.yaosiyuan.service.redis.MsProductInfoRedisService"/>
-  
-  
-  
-  
-  
-  
+  <dubbo:reference id="orderRedisService" interface="com.yaosiyuan.service.redis.OrderRedisService"/>
+  <dubbo:reference id="msProductDetailRedisService" interface="com.yaosiyuan.service.redis.MsProductDetailRedisService"/>
+  <dubbo:reference id="msProductInfoRedisService" interface="com.yaosiyuan.service.redis.MsProductInfoRedisService"/>
 </beans>

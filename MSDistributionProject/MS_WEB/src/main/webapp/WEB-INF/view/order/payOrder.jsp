@@ -66,7 +66,7 @@ desired effect
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form"   action="toPayWithOrder" method="post">
+            <form role="form"   action="/orderAction/payOrder" method="post">
               <div class="box-body">
               
 				
@@ -109,7 +109,7 @@ desired effect
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" onclick="submit(this)">立即付款</button>
+                <button type="submit" class="btn btn-primary" onclick="submit(this)">订单提交</button>
               </div>
             </form>
           </div>

@@ -8,8 +8,10 @@
 */
 package com.yaosiyuan.service.redis;
 
+import java.util.List;
 import java.util.Map;
 
+import com.yaosiyuan.entity.MsOrder;
 import com.yaosiyuan.vo.order.ConstomOrder;
 
 /**
@@ -23,5 +25,10 @@ import com.yaosiyuan.vo.order.ConstomOrder;
 public interface OrderRedisService {
 
 	public Map<String, Object> secKill(int userId, int productId, ConstomOrder msOrder);
+
+	public boolean payOrder(Integer payType, Integer userId, Integer productId, Integer merchantId, String tradeId,
+			Integer payAmount);
+
+	public List<MsOrder> queryOrderByUserId(Integer userId);
 
 }

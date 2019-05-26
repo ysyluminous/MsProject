@@ -499,7 +499,7 @@ public class RedisUtil {
 	 * @param key
 	 *            键
 	 * @param index
-	 *            索引 index>=0时， 0 表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素，依次类推
+	 *            索引 index>=0时， 0 表头，log4j.properties 第二个元素，依次类推；index<0时，-log4j.properties，表尾，-2倒数第二个元素，依次类推
 	 * @return
 	 */
 	public Object lGetIndex(String key, long index) {
@@ -648,6 +648,10 @@ public class RedisUtil {
 	public long pushList(String key, String value) {
 		// 返回插入list的总条数
 		return redisTemplate.opsForList().leftPush(key, value);
+	}
+
+	public Set<String> getKeys(String key) {
+		return redisTemplate.keys(key + "*");
 	}
 
 }

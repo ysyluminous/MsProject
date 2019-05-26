@@ -9,6 +9,7 @@
 package com.yaosiyuan.action;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,34 +70,10 @@ public class OrderAction {
 
 	/**
 	 * 
-	 * @description: 功能描述： (跳转到支付页面)
-	 * @author: yaosiyuan
-	 * @version: 2.0
-	 * @date: 2019 2019年5月9日 下午8:13:05
-	 * @param request
-	 * @param payType
-	 *            1，代表支付宝 2,代表微信，3,代表银联
-	 * @param tradeId
-	 * @param payAmount
-	 * @return
-	 */
-	@RequestMapping(value = "toPayWithOrder")
-	public String toPayWithOrder(HttpServletRequest request, Integer id, String tradeId, Integer payAmount) {
-		request.setAttribute("id", id);
-		request.setAttribute("tradeId", tradeId);
-		request.setAttribute("payAmount", payAmount);
-		return "order/payReal";
-
-	}
-
-	/**
-	 * 
 	 * @description: 功能描述： (用户退款)
 	 * @author: yaosiyuan
 	 * @version: 2.0
 	 * @date: 2019 2019年5月9日 下午2:29:38
-	 * @param request
-	 * @param msOrder
 	 * @return
 	 */
 	@RequestMapping(value = "applyRefund")
@@ -107,7 +84,9 @@ public class OrderAction {
 		if (onLine == null) {
 			return "redirect:/";
 		}
-		msOrderService.updateOrderStatusById(4, orderId, payType);
+
+		//数据库退款
+//		msOrderService.updateOrderStatusById(4, orderId, payType);
 		return "redirect:queryOrderByUserId";
 
 	}
@@ -119,7 +98,6 @@ public class OrderAction {
 	 * @version: 2.0
 	 * @date: 2019 2019年5月9日 下午2:29:38
 	 * @param request
-	 * @param msOrder
 	 * @return
 	 */
 	@RequestMapping(value = "auditRefund")
@@ -159,13 +137,12 @@ public class OrderAction {
 	}
 
 	/**
-	 * 
+	 *
 	 * @description: 功能描述： (通过用户id查询订单)
 	 * @author: yaosiyuan
 	 * @version: 2.0
 	 * @date: 2019 2019年5月9日 下午2:29:38
 	 * @param request
-	 * @param msOrder
 	 * @return
 	 */
 	@RequestMapping(value = "orderListByMerId")
@@ -198,8 +175,8 @@ public class OrderAction {
 	 * @return
 	 */
 	@RequestMapping(value = "orderPay", method = RequestMethod.POST)
-	public String orderPay(HttpServletRequest request, Integer payType, Integer id, String tradeId, Integer payAmount) {
-
+	public String orderPay(HttpServletRequest request, Integer payType, Integer userId, Integer productId,
+			Integer merchantId, String tradeId, Integer payAmount) {
 		Integer payStatus = 2;
 		// 支付宝
 		if (payStatus == 1) {
@@ -214,7 +191,13 @@ public class OrderAction {
 
 		// 如果支付成功
 		if (payStatus == 1) {
-			msOrderService.updateOrderStatusById(2, id, payType);
+			// msOrderService.updateOrderStatusById(2, userId, payType);
+			boolean isSuccess = orderRedisService.payOrder(payType, userId, productId, merchantId, tradeId, payAmount);
+			if (isSuccess) {
+				System.out.println("保存成功");
+			} else {
+				System.out.println("保存失败");
+			}
 
 		}
 		return "redirect:queryOrderByUserId";
@@ -228,7 +211,6 @@ public class OrderAction {
 	 * @version: 2.0
 	 * @date: 2019 2019年5月9日 下午2:29:38
 	 * @param request
-	 * @param msOrder
 	 * @return
 	 */
 	@RequestMapping(value = "queryOrderByUserId")
@@ -241,7 +223,9 @@ public class OrderAction {
 		}
 
 		Integer userId = onLine.getMsUser().getId();
-		List<MsOrder> orderList = msOrderService.queryOrderByUserId(userId);
+
+		List<MsOrder> orderList = orderRedisService.queryOrderByUserId(userId);
+		// List<MsOrder> orderList = msOrderService.queryOrderByUserId(userId);
 		request.setAttribute("orderList", orderList);
 		return "order/orderList";
 
@@ -263,14 +247,51 @@ public class OrderAction {
 		if (onLine == null) {
 			return "redirect:/userRegAndLogAction/toLogin";
 		}
-		boolean isSuccess = orderRedisService.secKill(msOrder.getUserId(), msOrder.getProductId(), msOrder);
+		Map<String, Object> resultMap = orderRedisService.secKill(msOrder.getUserId(), msOrder.getProductId(), msOrder);
+		boolean isSuccess = (boolean) resultMap.get("success");
 
 		if (isSuccess) {
 			System.out.println("秒杀成功");
+
+			// Integer id, String tradeId, Integer payAmount
+			Map<String, String> dataMap = (Map<String, String>) resultMap.get("dateMap");
+			String merchantId = dataMap.get("merchantId");
+			String productId = dataMap.get("productId");
+			String payAmount = dataMap.get("payAmount");
+			String tradeId = dataMap.get("tradeId");
+			String userId = dataMap.get("userId");
+			return "redirect:toPayWithOrder?userId=" + userId + "&&productId=" + productId + "&&tradeId=" + tradeId
+					+ "&&payAmount=" + payAmount + "&&merchantId=" + merchantId;
 		} else {
 			System.out.println("秒杀失败");
 		}
 		return "redirect:/";
+
+	}
+
+	/**
+	 * 
+	 * @description: 功能描述： (跳转到支付页面)
+	 * @author: yaosiyuan
+	 * @version: 2.0
+	 * @date: 2019 2019年5月9日 下午8:13:05
+	 * @param request
+	 * @param payType
+	 *            1，代表支付宝 2,代表微信，3,代表银联
+	 * @param tradeId
+	 * @param payAmount
+	 * @return
+	 */
+	@RequestMapping(value = "toPayWithOrder")
+	public String toPayWithOrder(HttpServletRequest request, Integer userId, Integer productId, Integer merchantId,
+			String tradeId, Integer payAmount) {
+
+		request.setAttribute("userId", userId);
+		request.setAttribute("productId", productId);
+		request.setAttribute("merchantId", merchantId);
+		request.setAttribute("tradeId", tradeId);
+		request.setAttribute("payAmount", payAmount);
+		return "order/payReal";
 
 	}
 

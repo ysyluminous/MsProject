@@ -8,9 +8,10 @@
 */
 package com.yaosiyuan.service;
 
-import java.util.List;
-
 import com.yaosiyuan.entity.MsOrder;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @description: 功能描述 ()
@@ -30,4 +31,9 @@ public interface MsOrderService {
 
 	public List<MsOrder> queryOrderListByMerId(Integer merchantId);
 
+	public void updateOrderStatusByTradeId(Integer payStatus, String tradeId, Integer payType, Date payTime);
+
+
+
+	public void updateOrderByTradeId(Integer payStatus, String tradeId);
 }

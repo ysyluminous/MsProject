@@ -102,7 +102,10 @@ desired effect
 						<!-- int orderid,int paytype -->
 						<td> 
 							<c:if test="${item.payStatus == 1 }">
-								<a href="toPayWithOrder?id=${item.id}&&tradeId=${item.tradeId}&&payAmount=${item.payAmount}">继续支付</a>
+
+								<a href="toPayWithOrder?userId=${item.userId}&&productId=${item.productId}
+								&&merchantId=${merchantId}
+								&&tradeId=${item.tradeId}&&payAmount=${item.payAmount}">继续支付</a>
 							</c:if>
 								<c:if test="${item.payStatus == 2 }">支付完成
 						

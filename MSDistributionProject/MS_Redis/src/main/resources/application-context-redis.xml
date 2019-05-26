@@ -19,8 +19,8 @@
     
     <dubbo:service interface="com.yaosiyuan.service.redis.OrderRedisService" ref="orderRedisServiceImpl"/>
     <bean id="orderRedisServiceImpl" class="com.yaosiyuan.redis.OrderRedisServiceImpl"/>
-    
-    <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>  
-  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/> 
-    
+
+    <dubbo:reference id="msProductInfoCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductInfoCacheService"/>
+  <dubbo:reference id="msProductDetailCacheServiceImpl" interface="com.yaosiyuan.service.cache.MsProductDetailCacheService"/>
+
 </beans>

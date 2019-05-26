@@ -1,16 +1,42 @@
 package com.yaosiyuan.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.yaosiyuan.entity.MsOrder;
 import com.yaosiyuan.entity.MsOrderExample;
 import com.yaosiyuan.vo.order.MsOrderVo;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+/**
+ * @author yaosiyuan
+ */
 public interface MsOrderMapper {
-
+  	/**
+	 * @Author YaoSiyuan
+	 * @Description 通过用户id更改支付状态
+	 * @Date 20:30 2019/5/26
+	 * @Param [msOrderVo]
+	 * @return void
+	 **/
 	public void updateOrderStatusById(MsOrderVo msOrderVo);
+
+	/**
+	 * @Author YaoSiyuan
+	 * @Description 根据订单交易号更改支付状态
+	 * @Date 20:30 2019/5/26
+	 * @Param [msOrderVo]
+	 * @return void
+	 **/
+	public void updateOrderStatusByTradeId(MsOrderVo msOrderVo);
+	/**
+	 * @Author YaoSiyuan
+	 * @Description 根据流水号更新订单
+	 * @Date 20:32 2019/5/26
+	 * @Param [msOrderVo]
+	 * @return void
+	 **/
+	public void updateOrderByTradeId(MsOrder record);
+
 
 	long countByExample(MsOrderExample example);
 

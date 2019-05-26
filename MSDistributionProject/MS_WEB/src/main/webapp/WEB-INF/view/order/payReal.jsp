@@ -76,7 +76,13 @@ desired effect
 				流水号：${tradeId}
 				<input type="hidden" name="payAmount" value="${payAmount}">
 				<input type="hidden" name="tradeId" value="${tradeId}">
-				<input type="hidden" name="id" value="${id}">
+				<input type="hidden" name="userId" value="${userId}">
+				<input type="hidden" name="productId" value="${productId}">
+				<input type="hidden" name="merchantId" value="${merchantId}">
+				
+				
+				
+				
 				<%-- 
              	 <div class="form-group">
                   <label>商品名称：</label>

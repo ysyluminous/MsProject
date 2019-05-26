@@ -8,17 +8,15 @@
 */
 package com.yaosiyuan.redis;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.yaosiyuan.entity.MsOrder;
 import com.yaosiyuan.service.redis.OrderRedisService;
 import com.yaosiyuan.util.DateUtil;
 import com.yaosiyuan.vo.order.ConstomOrder;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 /**
  * @description: 功能描述 ()
@@ -34,6 +32,10 @@ public class OrderRedisServiceImpl implements OrderRedisService {
 	@Autowired
 	RedisUtil redisUtil;
 
+
+	@Autowired
+	AmqpTemplate amqpTemplate;
+
 	/**
 	 * (非 Javadoc) Title: secKill Description:
 	 * 
@@ -41,8 +43,6 @@ public class OrderRedisServiceImpl implements OrderRedisService {
 	 * @param productId
 	 * @param msOrder
 	 * @return
-	 * @see com.yaosiyuan.service.redis.OrderRedisService#secKill(int, int,
-	 *      com.yaosiyuan.entity.MsOrder)
 	 */
 	@Override
 	public Map<String, Object> secKill(int userId, int productId, ConstomOrder msOrder) {
@@ -57,8 +57,9 @@ public class OrderRedisServiceImpl implements OrderRedisService {
 		redisUtil.pushList(productId + "", userId + "");
 
 		// 把订单信息放到redis 不走数据库，
-		String key = "userId:" + userId + "==productId" + productId;
+		String key = "userId:" + userId + "==productId:" + productId;
 		String value = "";
+
 		String createTimeString = DateUtil.transferDate(new Date(), "yyyy-MM-dd HH:mm:ss");
 		String merchantId = msOrder.getMerchantId() + "";
 		String payAmount = msOrder.getPayAmount() + "";
@@ -74,23 +75,131 @@ public class OrderRedisServiceImpl implements OrderRedisService {
 
 		Map<String, String> dateMap = new HashMap<String, String>();
 		dateMap.put("createtime", createTimeString);
-		dateMap.put("merchantid", merchantId);
-		dateMap.put("payamount", payAmount);
+		dateMap.put("merchantId", merchantId);
+		dateMap.put("payAmount", payAmount);
 		dateMap.put("receivingadress", receivingadress);
-		dateMap.put("receivingname", receiveName);
-		dateMap.put("receivingphone", receivePhone);
+		dateMap.put("receiveName", receiveName);
+		dateMap.put("receivePhone", receivePhone);
 		dateMap.put("stockcountnum", stockcountnum);
-		dateMap.put("tradeserialnumber", tradeserialnumber);
+		dateMap.put("tradeId", tradeserialnumber);
 		dateMap.put("paystatus", paystatus);
-		dateMap.put("productid", productId + "");
-		dateMap.put("userid", userId + "");
+		dateMap.put("productId", productId + "");
+		dateMap.put("userId", userId + "");
 
 		resultMap.put("success", true);
-		resultMap.put("datamap", dateMap);
+		resultMap.put("dateMap", dateMap);
 
+		//发送消息到消息队列，第一个参数是交换机名称，第二个参数是队列名称
+		amqpTemplate.convertAndSend("ms_exchange","orderinfoaction",dateMap);
 		System.out.println("秒杀成功");
 
 		return resultMap;
 	}
+
+	@Override
+	public boolean payOrder(Integer payType, Integer userId, Integer productId, Integer merchantId, String tradeId,
+							Integer payAmount) {
+
+		String key = "userId:" + userId + "==productId:" + productId;
+		String value = (String) redisUtil.get(key);
+		String[] splitvalues = value.split("==");
+		splitvalues[0] = "2";
+		value = "";
+		for (String temp : splitvalues) {
+			value += temp + "==";
+		}
+		boolean isSuccess = redisUtil.set(key, value);
+
+		Map<String, String> dateMap = new HashMap<String, String>();
+		dateMap.put("tradeId", tradeId);
+		dateMap.put("payStatus", "2");
+ 		String payTimeString = DateUtil.transferDate(new Date(),"yyyy-MM-dd HH:mm:ss");
+ 		dateMap.put("payTimeString",payTimeString);
+ 		dateMap.put("payType",payType+"");
+		amqpTemplate.convertAndSend("ms_exchange","payInfoService",dateMap);
+		return isSuccess;
+	}
+
+	/**
+	 *
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<MsOrder> queryOrderByUserId(Integer userId) {
+
+		List<MsOrder> listMsOrder = new ArrayList<MsOrder>();
+		Set<String> keys = redisUtil.getKeys("userId:" + userId);
+		for (String key : keys) {
+			String[] prusers = key.split("==");
+			if (prusers.length <= 1) {
+				continue;
+			}
+			String productid = prusers[1].split(":")[1];
+			String useridstring = prusers[0].split(":")[1];
+			String value = (String) redisUtil.get(key);
+			String[] valuearray = value.split("==");
+			String paystatus = valuearray[0];
+			String tradeserialnumber = valuearray[1];
+			String createtimestring = valuearray[2];
+			String merchantid = valuearray[3];
+			String payamount = valuearray[4];
+			String receivingadress = valuearray[5];
+			String receivingname = valuearray[6];
+			String receivingphone = valuearray[7];
+			String stockcountnum = valuearray[8];
+			MsOrder msorder = new MsOrder();
+			msorder.setCreateTime(DateUtil.transferDate(createtimestring, "yyyy-MM-dd HH:mm:ss"));
+			msorder.setPayAmount(Integer.valueOf(payamount));
+			msorder.setMerchantId(Integer.valueOf(merchantid));
+			msorder.setReceiveAddress(receivingadress);
+			msorder.setReceiveName(receivingname);
+			msorder.setProductId(Integer.valueOf(productid));
+			msorder.setReceivePhone(Integer.valueOf(receivingphone));
+			msorder.setTradeId(tradeserialnumber);
+			msorder.setUserId(userId);
+			msorder.setNum(1);
+			msorder.setPayStatus(Integer.valueOf(paystatus));
+			listMsOrder.add(msorder);
+		}
+		return listMsOrder;
+	}
+
+
+	@Override
+	public List<MsOrder> updagteOrderStatusBytradeId(Integer userId,Integer payStatusParam,String tradeId) {
+
+		List<MsOrder> listMsOrder = new ArrayList<MsOrder>();
+		Set<String> keys = redisUtil.getKeys("userId:" + userId);
+		for (String key : keys) {
+			String[] prusers = key.split("==");
+			if (prusers.length <= 1) {
+				continue;
+			}
+			String productid = prusers[1].split(":")[1];
+			String useridstring = prusers[0].split(":")[1];
+			String value = (String) redisUtil.get(key);
+			String[] valuearray = value.split("==");
+			String paystatus = valuearray[0];
+			String tradeserialnumber = valuearray[1];
+
+			if (! tradeId.equals(tradeserialnumber){
+				continue;
+			}
+			String createtimestring = valuearray[2];
+			String merchantid = valuearray[3];
+			String payamount = valuearray[4];
+			String receivingadress = valuearray[5];
+			String receivingname = valuearray[6];
+			String receivingphone = valuearray[7];
+			String stockcountnum = valuearray[8];
+
+			String valueTemp = payStatusParam + "==" + tradeserialnumber + "==" + createTimeString + "==" + merchantId + "==" + payAmount
+					+ "==" + receivingadress + "==" + receiveName + "==" + receivePhone + "==" + stockcountnum;
+
+		}
+		return listMsOrder;
+	}
+
 
 }
