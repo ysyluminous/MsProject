@@ -24,4 +24,12 @@ public interface MsProductInfoRedisService {
 	 */
 	public MsProductInfo queryProductById(int id);
 
+
+	/**'
+	 * 更新商品信息
+	 * @param msProductInfo
+	 */
+	public void updateProduct(MsProductInfo msProductInfo);
+
+
 }

@@ -9,6 +9,7 @@
 package com.yaosiyuan.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,19 @@ public class MsProductInfoCacheServiceImpl implements MsProductInfoCacheService 
 	@Autowired
 	MsProductInfoService msProductInfoService;
 
+	@Override
 	@Cacheable(value = "MS_Cache", key = "'user:'+#id")
 	public MsProductInfo queryProductById(int id) {
 		System.out.println("看到这条消息证明去查询数据库");
 		return msProductInfoService.queryProductById(id);
+	}
+
+
+	@Override
+	@CachePut(value = "MS_Cache", key = "'user:'+#id")
+	public MsProductInfo upadteProductById(MsProductInfo MsProductInfo) {
+		msProductInfoService.updateMsProductInfo(MsProductInfo);
+		return msProductInfoService.queryProductById(MsProductInfo.getId());
 	}
 
 }

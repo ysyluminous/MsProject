@@ -8,11 +8,11 @@
 */
 package com.yaosiyuan.service.redis;
 
-import java.util.List;
-import java.util.Map;
-
 import com.yaosiyuan.entity.MsOrder;
 import com.yaosiyuan.vo.order.ConstomOrder;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @description: 功能描述 ()
@@ -30,5 +30,6 @@ public interface OrderRedisService {
 			Integer payAmount);
 
 	public List<MsOrder> queryOrderByUserId(Integer userId);
+	public void updagteOrderStatusBytradeId(String flag,Integer userId,Integer payStatusParam,String tradeIdParam,Integer payType);
 
 }

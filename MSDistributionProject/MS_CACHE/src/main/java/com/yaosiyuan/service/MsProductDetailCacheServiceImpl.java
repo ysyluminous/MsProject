@@ -29,6 +29,7 @@ public class MsProductDetailCacheServiceImpl implements MsProductDetailCacheServ
 	@Autowired
 	MsProductDetailService msProductDetailService;
 
+	@Override
 	@Cacheable(value = "MS_Cache", key = "'product:' + #id")
 	public MsProductDetail selectByPrimaryKey(Integer id) {
 		System.out.println("看到这条消息证明去查询数据库");

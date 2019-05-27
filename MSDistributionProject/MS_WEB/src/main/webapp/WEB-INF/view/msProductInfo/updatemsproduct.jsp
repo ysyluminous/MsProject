@@ -47,13 +47,13 @@
             <!-- form start -->
             <form role="form" action="updateMsProduct" method="post">
               <div class="box-body">
-                <div class="form-group">
+               <%-- <div class="form-group">
                   <label for="exampleInputEmail1">商品id:</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="商品id" name="productId" value="${msProductInfo.productId }">
+                  <input type="email" class="form-control"    id="exampleInputEmail1" placeholder="商品id" name="productId" value="${msProductInfo.productId }">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <label for="exampleInputPassword1">商品标题</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="商品标题" ${msProductInfo.productTitle }>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile">File input</label>
@@ -65,7 +65,18 @@
                   <label>
                     <input type="checkbox"> Check me out
                   </label>
-                </div>
+                </div>--%>
+                 <input name="id" value="${msProductInfo.id }" type="hidden">
+                 商品id:<input name="productId" value="${msProductInfo.productId }"></br>
+                 商品标题:<input name="productTitle" value="${msProductInfo.productTitle }"></br>
+                 商品图片地址:<input name="productPic" value="${msProductInfo.productPic }"></br>
+                 秒杀价格:<input name="miaoshaPrice" value="${msProductInfo.miaoshaPrice }"></br>
+                 商品原价:<input name="productOgPrice" value="${msProductInfo.productOgPrice }"></br>
+                 秒杀开始时间:<input name="startTimeString" value="${starttimestring }"></br>
+                 秒杀结束时间:<input name="endTimeString" value="${endtimestring}"></br>
+                 秒杀商品数量:<input name="productCount" value="${msProductInfo.productCount }"></br>
+                 库存:<input name="stockCount" value="${msProductInfo.stockCount }"></br>
+                 描述:<input name="description" value="${msProductInfo.description }"></br>
               </div>
               <!-- /.box-body -->
 

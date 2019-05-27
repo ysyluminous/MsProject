@@ -103,8 +103,9 @@ public class MsProductAction {
 	}
 
 	@RequestMapping(value = "updateMsProduct", method = RequestMethod.POST)
-	public String updatemsproduct(HttpServletRequest req, MsProductInfo MsProductInfo) {
-		msProductInfoService.updateMsProductInfo(MsProductInfo);
+	public String updateMsProduct(HttpServletRequest req, MsProductInfo msProductInfo) {
+//		msProductInfoService.updateMsProductInfo(MsProductInfo);
+		msProductInfoRedisService.updateProduct(msProductInfo);
 		return "redirect:listMsProduct";
 	}
 

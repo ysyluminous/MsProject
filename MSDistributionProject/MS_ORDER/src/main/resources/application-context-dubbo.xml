@@ -11,7 +11,9 @@
    <dubbo:application name="MS_ORDER"/>
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
 
-
+    <dubbo:reference id="wxPay" interface="com.yaosiyuan.service.pay.WxPay"/>
+    <dubbo:reference id="aliPay" interface="com.yaosiyuan.service.pay.AliPay"/>
+    <dubbo:reference id="ylPay" interface="com.yaosiyuan.service.pay.YlPay"/>
  <dubbo:reference id="msOrderService" interface="com.yaosiyuan.service.MsOrderService"/>
 
 

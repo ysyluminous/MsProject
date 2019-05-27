@@ -14,9 +14,7 @@
     <bean id="msProductDetailCacheServiceImpl" class="com.yaosiyuan.service.MsProductDetailCacheServiceImpl"/>
     <dubbo:service interface="com.yaosiyuan.service.cache.MsProductInfoCacheService" ref="msProductInfoCacheServiceImpl"/>
     <bean id="msProductInfoCacheServiceImpl" class="com.yaosiyuan.service.MsProductInfoCacheServiceImpl"/>
-    
-    
-    
+
       <dubbo:reference id="msProductDetailService" interface="com.yaosiyuan.service.MsProductDetailService"/>
        <dubbo:reference id="msProductInfoService" interface="com.yaosiyuan.service.MsProductInfoService"/>
     

@@ -50,14 +50,7 @@ public class OrderAction {
 	@Autowired
 	MsProductInfoService msProductInfoService;
 
-	@Autowired
-	AliPay aliPay;
 
-	@Autowired
-	WxPay wxPay;
-
-	@Autowired
-	YlPay ylPay;
 
 	@Autowired
 	MsProductInfoRedisService msProductInfoRedisService;
@@ -68,6 +61,17 @@ public class OrderAction {
 	@Autowired
 	OrderRedisService orderRedisService;
 
+
+
+	@Autowired
+	AliPay aliPay;
+
+	@Autowired
+	WxPay wxPay;
+
+	@Autowired
+	YlPay ylPay;
+
 	/**
 	 * 
 	 * @description: 功能描述： (用户退款)
@@ -77,7 +81,7 @@ public class OrderAction {
 	 * @return
 	 */
 	@RequestMapping(value = "applyRefund")
-	public String applyRefund(HttpServletRequest request, Integer orderId, Integer payType) {
+	public String applyRefund(HttpServletRequest request, String tradeId) {
 
 		HttpSession session = request.getSession();
 		OnLine onLine = (OnLine) session.getAttribute("onLine");
@@ -87,6 +91,12 @@ public class OrderAction {
 
 		//数据库退款
 //		msOrderService.updateOrderStatusById(4, orderId, payType);
+
+
+		orderRedisService.updagteOrderStatusBytradeId("update"
+				, onLine.getMsUser().getId(),
+				4,tradeId,-1);
+
 		return "redirect:queryOrderByUserId";
 
 	}
@@ -101,36 +111,17 @@ public class OrderAction {
 	 * @return
 	 */
 	@RequestMapping(value = "auditRefund")
-	public String auditRefund(HttpServletRequest request, String tradeId, Integer payAmount, Integer orderId,
-			Integer payType, Integer payStatus) {
+	public String auditRefund(HttpServletRequest request, String tradeId,
+							  Integer userId ,Integer payAmount, Integer payType,
+							  Integer payStatus) {
 
 		HttpSession session = request.getSession();
 		OnLine onLine = (OnLine) session.getAttribute("onLine");
 		if (onLine == null) {
 			return "redirect:/";
 		}
+		orderRedisService.updagteOrderStatusBytradeId("refund",userId,payStatus,tradeId,payType);
 
-		if (payStatus == 3) {
-			int payStatusTemp = 2;
-			// 支付宝
-			if (payType == 1) {
-				payStatusTemp = aliPay.refundOrder(tradeId, payAmount);
-				// 微信
-			} else if (payType == 2) {
-				payStatusTemp = wxPay.refundOrder(tradeId, payAmount);
-				// 银联
-			} else if (payType == 3) {
-				payStatusTemp = ylPay.refundOrder(tradeId, payAmount);
-			}
-
-			// 如果退款成功
-			if (payStatusTemp == 1) {
-				msOrderService.updateOrderStatusById(payStatus, orderId, payType);
-			}
-
-		} else if (payStatus == 5) {
-			msOrderService.updateOrderStatusById(payStatus, orderId, payType);
-		}
 
 		return "order/orderListByMer";
 

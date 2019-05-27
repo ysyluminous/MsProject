@@ -24,4 +24,18 @@ public interface MsProductInfoCacheService {
 	 */
 	public MsProductInfo queryProductById(int id);
 
+
+
+
+	/**
+	 * @Author YaoSiyuan                         
+	 * @Description 根据商品id更新信息
+	 * @Date 14:07 2019/5/27
+	 * @Param [id]
+	 * @return com.yaosiyuan.entity.MsProductInfo       
+	 **/       
+	public MsProductInfo upadteProductById(MsProductInfo MsProductInfo);
+
+
+
 }
